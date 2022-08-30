@@ -1,4 +1,4 @@
-package com.example.cloudy.ui.theme
+package com.lyvetech.cloudy.core.theme
 
 import androidx.compose.ui.graphics.Color
 

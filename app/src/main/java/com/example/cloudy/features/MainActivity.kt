@@ -1,4 +1,4 @@
-package com.example.cloudy
+package com.example.cloudy.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,13 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cloudy.ui.theme.CloudyTheme
+import com.lyvetech.cloudy.core.theme.CloudyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CloudyTheme {
+            com.lyvetech.cloudy.core.theme.CloudyTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -37,7 +37,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    CloudyTheme {
+    com.lyvetech.cloudy.core.theme.CloudyTheme {
         Greeting("Android")
     }
 }
