@@ -20,6 +20,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "BASE_URL", "\"http://api.openweathermap.org/\""
     }
 
     buildTypes {
@@ -79,4 +81,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+
+    // Room
+    def room_version = "2.4.3"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }
