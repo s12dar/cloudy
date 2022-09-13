@@ -2,6 +2,8 @@ package com.example.cloudy.features.weather.data.mapper
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.cloudy.features.weather.data.local.entity.WeatherDataEntity
+import com.example.cloudy.features.weather.data.local.entity.WeatherEntity
 import com.example.cloudy.features.weather.data.remote.dto.WeatherDataDto
 import com.example.cloudy.features.weather.data.remote.dto.WeatherDto
 import com.example.cloudy.features.weather.domain.model.WeatherData
@@ -16,7 +18,7 @@ private data class IndexedWeatherData(
 )
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
+fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     return time.mapIndexed { index, value ->
         val temperature = temperatures[index]
         val weatherCode = weatherCodes[index]
@@ -43,7 +45,7 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun WeatherDto.toWeatherInfo(): WeatherInfo {
+fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
     val currentWeatherData = weatherDataMap[0]?.find {
@@ -54,5 +56,23 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
     return WeatherInfo(
         weatherInfoPerDay = weatherDataMap,
         currentWeatherData = currentWeatherData
+    )
+}
+
+fun WeatherDto.toWeatherLocal(): WeatherEntity {
+    val weatherDataLocal = weatherData.toWeatherDataLocal()
+    return WeatherEntity(
+        weatherData = weatherDataLocal
+    )
+}
+
+fun WeatherDataDto.toWeatherDataLocal(): WeatherDataEntity {
+    return WeatherDataEntity(
+        time = time,
+        temperatures = temperatures,
+        weatherCodes = weatherCodes,
+        windSpeeds = windSpeeds,
+        pressures = pressures,
+        humidities = humidities
     )
 }
