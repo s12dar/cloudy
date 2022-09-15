@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.cloudy.core.data.local.WeatherDatabase.Companion.DB_VERSION
+import com.example.cloudy.core.data.local.WeatherDatabase.Companion.EXP_FALSE
 import com.example.cloudy.features.weather.data.local.dao.WeatherDao
 import com.example.cloudy.features.weather.data.local.entity.WeatherEntity
 import com.example.cloudy.features.weather.data.util.Converters
@@ -12,7 +13,7 @@ import com.example.cloudy.features.weather.data.util.Converters
 @Database(
     entities = [WeatherEntity::class],
     version = DB_VERSION,
-    exportSchema = false
+    exportSchema = EXP_FALSE
 )
 @TypeConverters(
     Converters::class
@@ -24,5 +25,6 @@ abstract class WeatherDatabase : RoomDatabase() {
     companion object {
         const val DB_NAME = "weather.db"
         const val DB_VERSION = 1
+        const val EXP_FALSE = false
     }
 }
