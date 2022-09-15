@@ -1,7 +1,9 @@
 package com.example.cloudy.features.weather.data.remote.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class WeatherDataDto(
     val time: List<String>,
     @field:Json(name = "temperature_2m")

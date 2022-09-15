@@ -2,11 +2,10 @@ package com.example.cloudy.features.weather.data.local.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.example.cloudy.features.weather.domain.model.WeatherData
-import com.example.cloudy.features.weather.domain.model.WeatherInfo
+import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "weather_table")
+@JsonClass(generateAdapter = true)
 data class WeatherEntity(
     @Embedded
     val weatherData: WeatherDataEntity
