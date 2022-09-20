@@ -59,9 +59,11 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     )
 }
 
-fun WeatherDto.toWeatherLocal(): WeatherEntity {
+fun WeatherDto.toWeatherLocal(timeSpan: String, lastFetchTime: Long): WeatherEntity {
     val weatherDataLocal = weatherData.toWeatherDataLocal()
     return WeatherEntity(
+        timeSpan = timeSpan,
+        lastFetchTime = lastFetchTime,
         weatherData = weatherDataLocal
     )
 }

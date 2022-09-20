@@ -10,10 +10,11 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class WeatherEntity(
 
-    @PrimaryKey(autoGenerate = true)
-    @field:Json(name = "uid")
-    val uid: Int,
-
+    @PrimaryKey
+    @field:Json(name = "timespan")
+    val timeSpan: String,
+    @field:Json(name = "lastFetchTime")
+    val lastFetchTime: Long,
     @Embedded
     @field:Json(name = "weatherData")
     val weatherData: WeatherDataEntity
