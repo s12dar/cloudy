@@ -15,7 +15,7 @@ object LocalDataModule {
 
     @Provides
     @Singleton
-    fun provideTransNatureDatabase(app: Application): WeatherDatabase {
+    fun provideWeatherDb(app: Application): WeatherDatabase {
         return Room.databaseBuilder(
             app,
             WeatherDatabase::class.java, WeatherDatabase.DB_NAME

@@ -11,7 +11,6 @@ import com.example.cloudy.features.weather.domain.model.WeatherInfo
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
 private data class IndexedWeatherData(
     val index: Int,
     val data: WeatherData
@@ -29,7 +28,7 @@ fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
             index = index,
             WeatherData(
                 time = LocalDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME),
-                temperatureInCelsius = temperature,
+                temperatureCelsius = temperature,
                 windSpeed = windSpeed,
                 pressure = pressure,
                 humidity = humidity
@@ -54,8 +53,8 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     }
 
     return WeatherInfo(
-        weatherInfoPerDay = weatherDataMap,
-        currentWeatherData = currentWeatherData
+        weatherDataPerDay = weatherDataMap,
+        currentWeatherData = currentWeatherData!!
     )
 }
 

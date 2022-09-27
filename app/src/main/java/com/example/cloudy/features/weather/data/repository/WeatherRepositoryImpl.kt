@@ -1,6 +1,7 @@
 package com.example.cloudy.features.weather.data.repository
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.cloudy.core.di.IoDispatcher
 import com.example.cloudy.core.util.Resource
@@ -32,13 +33,15 @@ class WeatherRepositoryImpl @Inject constructor(
                 ?: run {
                     when (val result = remoteDataSource.getWeather(lat, long)) {
                         is Resource.Success -> {
+                            localDataSource.deleteAllWeather()
+                            result.data?.weatherData?.humidities?.get(0)
+                                ?.let { Log.i("Hi serdar, success", it.toString()) }
                             result.data?.let {
                                 insertWeatherResponse(
                                     timeSpan,
                                     it
                                 )
                             }
-                            localDataSource.deleteAllWeather()
                             val localResult = localDataSource.getWeather().toWeatherInfo()
                             Resource.Success(localResult)
                         }
@@ -66,7 +69,7 @@ class WeatherRepositoryImpl @Inject constructor(
         localDataSource.getWeather()
 
     private fun WeatherEntity.isExpired(): Boolean =
-        System.currentTimeMillis() - lastFetchTime > EXPIRED_TIME
+        System.currentTimeMillis() - 0 > EXPIRED_TIME
 
     companion object {
         private const val EXPIRED_TIME = 1000L * 60

@@ -1,6 +1,6 @@
-package com.plcoding.weatherapp.presentation
+package com.example.cloudy.features.weather.ui
 
-import com.plcoding.weatherapp.domain.weather.WeatherInfo
+import com.example.cloudy.features.weather.domain.model.WeatherInfo
 
 data class WeatherState(
     val weatherInfo: WeatherInfo? = null,
