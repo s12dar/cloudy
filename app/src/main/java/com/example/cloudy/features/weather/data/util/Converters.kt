@@ -11,17 +11,17 @@ class Converters {
 
     private val typeString = Types.newParameterizedType(
         List::class.java,
-        String::class.java
+        String::class.javaObjectType
     )
 
     private val typeDouble = Types.newParameterizedType(
         List::class.java,
-        Double::class.java
+        Double::class.javaObjectType
     )
 
     private val typeInt = Types.newParameterizedType(
         List::class.java,
-        Int::class.java
+        Int::class.javaObjectType
     )
 
     private val adapterString: JsonAdapter<List<String>> = moshi.adapter(typeString)

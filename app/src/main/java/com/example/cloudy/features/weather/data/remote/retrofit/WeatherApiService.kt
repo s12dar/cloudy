@@ -13,6 +13,6 @@ interface WeatherApiService {
     ): Response<WeatherDto>
 
     companion object {
-        const val BASE_URL = "http://api.openweathermap.org/"
+        const val BASE_URL = "https://api.open-meteo.com/"
     }
 }

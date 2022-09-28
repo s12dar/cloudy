@@ -1,5 +1,7 @@
 package com.example.cloudy.features.weather.data.remote
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.cloudy.core.di.IoDispatcher
 import com.example.cloudy.core.util.Resource
 import com.example.cloudy.features.weather.data.remote.dto.WeatherDto
@@ -12,6 +14,7 @@ class WeatherRemoteDataSourceImpl @Inject constructor(
     private val apiService: WeatherApiService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : WeatherRemoteDataSource {
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeather(lat: Double, long: Double): Resource<WeatherDto> =
         withContext(ioDispatcher) {
             return@withContext try {
