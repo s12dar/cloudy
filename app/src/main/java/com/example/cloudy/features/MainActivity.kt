@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cloudy.features.weather.ui.WeatherViewModel
+import com.example.cloudy.features.home.ui.WeatherViewModel
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import dagger.hilt.android.AndroidEntryPoint

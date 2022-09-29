@@ -1,6 +1,6 @@
 package com.example.cloudy.core.di
 
-import com.example.cloudy.features.weather.data.remote.retrofit.WeatherApiService
+import com.example.cloudy.features.home.data.remote.retrofit.WeatherApiService
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides

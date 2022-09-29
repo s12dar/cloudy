@@ -5,9 +5,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.cloudy.core.data.local.WeatherDatabase.Companion.DB_VERSION
 import com.example.cloudy.core.data.local.WeatherDatabase.Companion.EXP_FALSE
-import com.example.cloudy.features.weather.data.local.dao.WeatherDao
-import com.example.cloudy.features.weather.data.local.entity.WeatherEntity
-import com.example.cloudy.features.weather.data.util.Converters
+import com.example.cloudy.features.home.data.local.dao.WeatherDao
+import com.example.cloudy.features.home.data.local.entity.WeatherEntity
+import com.example.cloudy.features.home.data.util.Converters
 
 
 @Database(
