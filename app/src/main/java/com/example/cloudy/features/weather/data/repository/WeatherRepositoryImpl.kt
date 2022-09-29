@@ -34,19 +34,17 @@ class WeatherRepositoryImpl @Inject constructor(
                     when (val result = remoteDataSource.getWeather(lat, long)) {
                         is Resource.Success -> {
                             localDataSource.deleteAllWeather()
-                            result.data?.weatherData?.humidities?.get(0)
-                                ?.let { Log.i("Hi serdar, success", it.toString()) }
                             result.data?.let {
                                 insertWeatherResponse(
                                     timeSpan,
                                     it
                                 )
                             }
-                            val localResult = localDataSource.getWeather().toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal().toWeatherInfo()
                             Resource.Success(localResult)
                         }
                         is Resource.Error -> {
-                            val localResult = localDataSource.getWeather().toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal().toWeatherInfo()
                             Resource.Error(localResult, result.message)
                         }
                         else -> {
@@ -69,7 +67,7 @@ class WeatherRepositoryImpl @Inject constructor(
         localDataSource.getWeather()
 
     private fun WeatherEntity.isExpired(): Boolean =
-        System.currentTimeMillis() - 0 > EXPIRED_TIME
+        System.currentTimeMillis() - lastFetchTime > EXPIRED_TIME
 
     companion object {
         private const val EXPIRED_TIME = 1000L * 60
