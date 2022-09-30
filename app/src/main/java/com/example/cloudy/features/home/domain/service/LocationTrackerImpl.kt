@@ -18,7 +18,8 @@ class LocationTrackerImpl @Inject constructor(
     private val application: Application
 ) : LocationTracker {
 
-    override suspend fun getCurrentLocation(): Resource<Location?> {
+    override suspend fun getCurrentLocation():
+            Resource<Location?> = suspendCancellableCoroutine { cont ->
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -42,33 +43,31 @@ class LocationTrackerImpl @Inject constructor(
             )
         }
 
-        return suspendCancellableCoroutine { cont ->
-            locationClient.lastLocation.apply {
-                if (isComplete) {
-                    if (isSuccessful)
-                        cont.resume(Resource.Success(result))
-                    else cont.resume(
-                        Resource.Error(
-                            null,
-                            "Failed getting last known location"
-                        )
+        locationClient.lastLocation.apply {
+            if (isComplete) {
+                if (isSuccessful)
+                    cont.resume(Resource.Success(result))
+                else cont.resume(
+                    Resource.Error(
+                        null,
+                        "Failed getting last known location"
                     )
-                    return@suspendCancellableCoroutine
-                }
-                addOnSuccessListener {
-                    cont.resume(Resource.Success(it))
-                }
-                addOnFailureListener {
-                    cont.resume(
-                        Resource.Error(
-                            null,
-                            "Failed getting last known location"
-                        )
+                )
+                return@suspendCancellableCoroutine
+            }
+            addOnSuccessListener {
+                cont.resume(Resource.Success(it))
+            }
+            addOnFailureListener {
+                cont.resume(
+                    Resource.Error(
+                        null,
+                        "Failed getting last known location"
                     )
-                }
-                addOnCanceledListener {
-                    cont.cancel()
-                }
+                )
+            }
+            addOnCanceledListener {
+                cont.cancel()
             }
         }
     }
