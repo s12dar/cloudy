@@ -15,10 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.cloudy.features.home.data.repository.WeatherRepository
+import com.example.cloudy.features.home.domain.service.LocationTracker
 
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
+    private val locationTracker: LocationTracker
 ) : ViewModel() {
 
     var state by mutableStateOf(WeatherState())
@@ -32,24 +34,33 @@ class WeatherViewModel @Inject constructor(
                 isLoading = true,
                 error = null
             )
-            when (val result = repository.getWeatherInfo(12.0, 12.0, "hihi")) {
-                is Resource.Success -> {
-                    state = state.copy(
-                        weatherInfo = result.data,
-                        isLoading = false,
-                        error = null
-                    )
-                }
-                is Resource.Error -> {
-                    state = state.copy(
-                        weatherInfo = null,
-                        isLoading = false,
-                        error = result.message
-                    ).also {
-                        Log.i("Hi Serdar, viewmodel, ", it.error.toString())
+
+            locationTracker.getCurrentLocation().data?.let { location ->
+                when (val result =
+                    repository.getWeatherInfo(location.latitude, location.longitude, "hihi")) {
+                    is Resource.Success -> {
+                        state = state.copy(
+                            weatherInfo = result.data,
+                            isLoading = false,
+                            error = null
+                        )
                     }
+                    is Resource.Error -> {
+                        state = state.copy(
+                            weatherInfo = null,
+                            isLoading = false,
+                            error = result.message
+                        ).also {
+                            Log.i("Hi Serdar, viewmodel, ", it.error.toString())
+                        }
+                    }
+                    else -> {}
                 }
-                else -> {}
+            } ?: kotlin.run {
+                state = state.copy(
+                    isLoading = false,
+                    error = "Couldn't retrieve location. Make sure to grant location permission"
+                )
             }
         }
     }
