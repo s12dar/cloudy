@@ -33,8 +33,8 @@ class LocationTrackerImpl @Inject constructor(
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
-        if (!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission ||
-            !isGpsEnabled
+        if (!hasAccessCoarseLocationPermission || !hasAccessFineLocationPermission
+            || !isGpsEnabled
         ) {
             Resource.Error(
                 data = null,
@@ -45,15 +45,26 @@ class LocationTrackerImpl @Inject constructor(
         return suspendCancellableCoroutine { cont ->
             locationClient.lastLocation.apply {
                 if (isComplete) {
-                    if (isSuccessful) cont.resume(Resource.Success(result))
-                    else cont.resume(Resource.Error(null, "Failed getting last known location"))
+                    if (isSuccessful)
+                        cont.resume(Resource.Success(result))
+                    else cont.resume(
+                        Resource.Error(
+                            null,
+                            "Failed getting last known location"
+                        )
+                    )
                     return@suspendCancellableCoroutine
                 }
                 addOnSuccessListener {
                     cont.resume(Resource.Success(it))
                 }
                 addOnFailureListener {
-                    cont.resume(Resource.Error(null, "Failed getting last known location"))
+                    cont.resume(
+                        Resource.Error(
+                            null,
+                            "Failed getting last known location"
+                        )
+                    )
                 }
                 addOnCanceledListener {
                     cont.cancel()
