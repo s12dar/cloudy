@@ -15,5 +15,5 @@ interface WeatherDao {
     suspend fun deleteAllWeather()
 
     @Query("SELECT * FROM weather_table")
-    suspend fun getWeatherInfo(): WeatherEntity
+    suspend fun getWeatherInfo(): WeatherEntity?
 }

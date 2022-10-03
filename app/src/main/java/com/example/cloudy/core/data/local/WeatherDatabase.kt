@@ -12,6 +12,7 @@ import com.example.cloudy.features.home.data.util.Converters
 
 @Database(
     entities = [WeatherEntity::class],
+
     version = DB_VERSION,
     exportSchema = EXP_FALSE
 )

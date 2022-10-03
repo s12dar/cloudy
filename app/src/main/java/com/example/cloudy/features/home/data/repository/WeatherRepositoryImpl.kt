@@ -27,7 +27,7 @@ class WeatherRepositoryImpl @Inject constructor(
         timeSpan: String
     ): Resource<WeatherInfo> =
         withContext(ioDispatcher) {
-            fetchWeatherFromLocal().takeIf { !it.isExpired() }
+            fetchWeatherFromLocal()?.takeIf { !it.isExpired() }
                 ?.let { Resource.Success(it.toWeatherInfo()) }
                 ?: run {
                     when (val result = remoteDataSource.getWeather(lat, long)) {
@@ -39,11 +39,11 @@ class WeatherRepositoryImpl @Inject constructor(
                                     it
                                 )
                             }
-                            val localResult = fetchWeatherFromLocal().toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
                             Resource.Success(localResult)
                         }
                         is Resource.Error -> {
-                            val localResult = fetchWeatherFromLocal().toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
                             Resource.Error(localResult, result.message)
                         }
                         else -> {

@@ -16,7 +16,7 @@ class WeatherLocalDataSourceImpl @Inject constructor(
             weatherDao.insertWeather(weatherData = weather)
         }
 
-    override suspend fun getWeather(): WeatherEntity =
+    override suspend fun getWeather(): WeatherEntity? =
         withContext(ioDispatcher) {
             weatherDao.getWeatherInfo()
         }
