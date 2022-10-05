@@ -8,6 +8,7 @@ import com.example.cloudy.features.home.data.remote.dto.WeatherDataDto
 import com.example.cloudy.features.home.data.remote.dto.WeatherDto
 import com.example.cloudy.features.home.domain.model.WeatherData
 import com.example.cloudy.features.home.domain.model.WeatherInfo
+import com.example.cloudy.features.home.domain.model.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,7 +32,8 @@ fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
                 temperatureCelsius = temperature,
                 windSpeed = windSpeed,
                 pressure = pressure,
-                humidity = humidity
+                humidity = humidity,
+                weatherType = WeatherType.fromWMO(weatherCode)
             )
         )
     }.groupBy {
