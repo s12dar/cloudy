@@ -56,14 +56,13 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
 
     return WeatherInfo(
         weatherDataPerDay = weatherDataMap,
-        currentWeatherData = currentWeatherData!!
+        currentWeatherData = currentWeatherData,
     )
 }
 
-fun WeatherDto.toWeatherLocal(timeSpan: String, lastFetchTime: Long): WeatherEntity {
+fun WeatherDto.toWeatherLocal(lastFetchTime: Long): WeatherEntity {
     val weatherDataLocal = weatherData.toWeatherDataLocal()
     return WeatherEntity(
-        timeSpan = timeSpan,
         lastFetchTime = lastFetchTime,
         weatherData = weatherDataLocal
     )

@@ -23,8 +23,7 @@ class WeatherRepositoryImpl @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeatherInfo(
         lat: Double,
-        long: Double,
-        timeSpan: String
+        long: Double
     ): Resource<WeatherInfo> =
         withContext(ioDispatcher) {
             fetchWeatherFromLocal()?.takeIf { !it.isExpired() }
@@ -35,7 +34,6 @@ class WeatherRepositoryImpl @Inject constructor(
                             localDataSource.deleteAllWeather()
                             result.data?.let {
                                 insertWeatherResponse(
-                                    timeSpan,
                                     it
                                 )
                             }
@@ -53,10 +51,9 @@ class WeatherRepositoryImpl @Inject constructor(
                 }
         }
 
-    private suspend fun insertWeatherResponse(timeSpan: String, remoteData: WeatherDto) {
+    private suspend fun insertWeatherResponse(remoteData: WeatherDto) {
         localDataSource.insertWeather(
             remoteData.toWeatherLocal(
-                timeSpan,
                 lastFetchTime = System.currentTimeMillis()
             )
         )

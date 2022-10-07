@@ -18,14 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cloudy.features.home.ui.WeatherViewModel
+import com.example.cloudy.features.home.ui.HomeRoute
+import com.example.cloudy.features.home.ui.HomeViewModel
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: WeatherViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -46,23 +47,7 @@ class MainActivity : ComponentActivity() {
         Stetho.initializeWithDefaults(this)
         setContent {
             CloudyTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    if (viewModel.state.isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                    viewModel.state.error?.let { error ->
-                        Text(
-                            text = error,
-                            color = Color.Red,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                }
+                HomeRoute()
             }
         }
     }

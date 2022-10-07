@@ -11,8 +11,6 @@ import com.squareup.moshi.JsonClass
 data class WeatherEntity(
 
     @PrimaryKey
-    @field:Json(name = "timespan")
-    val timeSpan: String,
     @field:Json(name = "lastFetchTime")
     val lastFetchTime: Long,
     @Embedded

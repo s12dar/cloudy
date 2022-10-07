@@ -24,7 +24,7 @@ abstract class WeatherDatabase : RoomDatabase() {
     abstract val weatherDao: WeatherDao
     companion object {
         const val DB_NAME = "weather.db"
-        const val DB_VERSION = 3
+        const val DB_VERSION = 4
         const val EXP_FALSE = false
     }
 }

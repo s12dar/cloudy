@@ -2,7 +2,6 @@ package com.example.cloudy.features.home.ui
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,12 +17,12 @@ import com.example.cloudy.features.home.data.repository.WeatherRepository
 import com.example.cloudy.features.home.domain.service.LocationTracker
 
 @HiltViewModel
-class WeatherViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val repository: WeatherRepository,
     private val locationTracker: LocationTracker
 ) : ViewModel() {
 
-    var state by mutableStateOf(WeatherState())
+    var state by mutableStateOf(HomeScreenState())
         private set
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -37,7 +36,7 @@ class WeatherViewModel @Inject constructor(
 
             locationTracker.getCurrentLocation().data?.let { location ->
                 when (val result =
-                    repository.getWeatherInfo(location.latitude, location.longitude, "hihi")) {
+                    repository.getWeatherInfo(location.latitude, location.longitude)) {
                     is Resource.Success -> {
                         state = state.copy(
                             weatherInfo = result.data,
@@ -50,9 +49,7 @@ class WeatherViewModel @Inject constructor(
                             weatherInfo = null,
                             isLoading = false,
                             error = result.message
-                        ).also {
-                            Log.i("Hi Serdar, viewmodel, ", it.error.toString())
-                        }
+                        )
                     }
                     else -> {}
                 }
