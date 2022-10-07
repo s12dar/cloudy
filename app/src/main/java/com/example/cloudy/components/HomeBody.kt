@@ -16,7 +16,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.cloudy.R
 
 @Composable
-fun HomeHeader(
+fun HomeBody(
     modifier: Modifier = Modifier,
     location: String,
     lastFetchTime: String,
@@ -64,7 +64,7 @@ fun HomeHeader(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun HomeHeaderPreview() {
-    HomeHeader(
+    HomeBody(
         modifier = Modifier.fillMaxWidth(),
         location = "San Francisco, CA",
         lastFetchTime = "Wednesday, Oct 5",
