@@ -1,7 +1,7 @@
 package com.example.cloudy.features.home.data.repository
 
+import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.cloudy.core.di.IoDispatcher
 import com.example.cloudy.core.util.Resource
@@ -12,6 +12,7 @@ import com.example.cloudy.features.home.data.mapper.toWeatherLocal
 import com.example.cloudy.features.home.data.remote.WeatherRemoteDataSource
 import com.example.cloudy.features.home.data.remote.dto.WeatherDto
 import com.example.cloudy.features.home.domain.model.WeatherInfo
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class WeatherRepositoryImpl @Inject constructor(
     private val remoteDataSource: WeatherRemoteDataSource,
     private val localDataSource: WeatherLocalDataSource,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @ApplicationContext private val appContext: Context
 ) : WeatherRepository {
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeatherInfo(
@@ -28,7 +30,7 @@ class WeatherRepositoryImpl @Inject constructor(
     ): Resource<WeatherInfo> =
         withContext(ioDispatcher) {
             fetchWeatherFromLocal()?.takeIf { !it.isExpired() }
-                ?.let { Resource.Success(it.toWeatherInfo()) }
+                ?.let { Resource.Success(it.toWeatherInfo(appContext)) }
                 ?: run {
                     when (val result = remoteDataSource.getWeather(lat, long)) {
                         is Resource.Success -> {
@@ -38,11 +40,11 @@ class WeatherRepositoryImpl @Inject constructor(
                                     it
                                 )
                             }
-                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo(appContext)
                             Resource.Success(localResult)
                         }
                         is Resource.Error -> {
-                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo(appContext)
                             Resource.Error(localResult, result.message)
                         }
                         else -> {

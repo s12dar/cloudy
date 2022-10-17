@@ -15,5 +15,9 @@ data class WeatherEntity(
     val lastFetchTime: Long,
     @Embedded
     @field:Json(name = "weatherData")
-    val weatherData: WeatherDataEntity
+    val weatherData: WeatherDataEntity,
+    @field:Json(name = "latitude")
+    val latitude: Double,
+    @field:Json(name = "longitude")
+    val longitude: Double
 )
