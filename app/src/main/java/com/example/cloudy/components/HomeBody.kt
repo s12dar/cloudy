@@ -2,18 +2,20 @@ package com.example.cloudy.components
 
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.Image
-import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.cloudy.R
+import com.lyvetech.cloudy.core.theme.typography
 
 @Composable
 fun HomeBody(
@@ -22,45 +24,31 @@ fun HomeBody(
     lastFetchTime: String,
     @DrawableRes img: Int
 ) {
-    ConstraintLayout(modifier = modifier) {
-        val (textLocation, textLastFetchTime, imageWeatherType) = createRefs()
 
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
             text = location,
-            style = typography.h4,
-            modifier = Modifier
-                .constrainAs(textLocation) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                })
-
+            style = typography.h1
+        )
         Text(
             text = lastFetchTime,
-            style = typography.subtitle2,
-            modifier = Modifier
-                .constrainAs(textLastFetchTime) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(textLocation.bottom)
-                }
-                .padding(top = 16.dp)
+            style = typography.h2,
+            modifier = Modifier.paddingFromBaseline(
+                top = 16.dp, bottom = 8.dp
+            )
         )
-
         Image(
             painter = painterResource(id = img),
             contentDescription = null,
             modifier = Modifier
-                .constrainAs(imageWeatherType) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(textLastFetchTime.bottom)
-                }
+                .size(104.dp)
         )
     }
 }
 
-@Preview(showBackground = true)
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun HomeHeaderPreview() {
