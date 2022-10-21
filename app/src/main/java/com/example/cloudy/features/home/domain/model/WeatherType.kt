@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import com.example.cloudy.R
 
 sealed class WeatherType(
-    weatherDesc: String,
+    val weatherDesc: String,
     @DrawableRes val iconRes: Int
 ) {
     object ClearSky : WeatherType(

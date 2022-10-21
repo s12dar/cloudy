@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cloudy.R
 import com.example.cloudy.components.HomeBody
 import com.example.cloudy.components.WeatherDataDisplay
+import com.example.cloudy.features.home.data.util.formatDate
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -65,41 +65,44 @@ internal fun HomeScreen(
                 viewModel.loadWeatherInfo()
             }, indicatorPadding = paddingValues
         ) {
-            uiState.weatherInfo?.currentWeatherData?.let {
-
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    HomeBody(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp, start = 8.dp, end = 8.dp),
-                        location = uiState.weatherInfo.location,
-                        lastFetchTime = it.time.toString(),
-                        img = it.weatherType.iconRes
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
+            uiState.weatherInfo?.let { weatherInfo ->
+                weatherInfo.currentWeatherData?.let {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        WeatherDataDisplay(
-                            value = it.pressure.roundToInt(),
-                            unit = "hpa",
-                            icon = ImageVector.vectorResource(id = R.drawable.ic_storm),
+                        HomeBody(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp, start = 8.dp, end = 8.dp),
+                            location = uiState.weatherInfo.location,
+                            lastFetchTime = weatherInfo.formatDate(),
+                            img = it.weatherType.iconRes,
+                            temperature = it.temperatureCelsius.toString(),
+                            weatherType = it.weatherType.weatherDesc
                         )
 
-                        WeatherDataDisplay(
-                            value = it.humidity.roundToInt(),
-                            unit = "%",
-                            icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
-                        )
-
-                        WeatherDataDisplay(
-                            value = it.windSpeed.roundToInt(),
-                            unit = "km/h",
-                            icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
-                        )
+//                        Row(
+//                            modifier = Modifier.fillMaxWidth(),
+//                            horizontalArrangement = Arrangement.SpaceAround
+//                        ) {
+//                            WeatherDataDisplay(
+//                                value = it.pressure.roundToInt(),
+//                                unit = "hpa",
+//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm),
+//                            )
+//
+//                            WeatherDataDisplay(
+//                                value = it.humidity.roundToInt(),
+//                                unit = "%",
+//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
+//                            )
+//
+//                            WeatherDataDisplay(
+//                                value = it.windSpeed.roundToInt(),
+//                                unit = "km/h",
+//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
+//                            )
+//                        }
                     }
                 }
             }

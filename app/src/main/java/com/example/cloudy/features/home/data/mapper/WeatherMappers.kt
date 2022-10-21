@@ -62,7 +62,8 @@ fun WeatherEntity.toWeatherInfo(context: Context): WeatherInfo {
     return WeatherInfo(
         weatherDataPerDay = weatherDataMap,
         currentWeatherData = currentWeatherData,
-        location = location
+        location = location,
+        lastFetchedTime = lastFetchTime
     )
 }
 
