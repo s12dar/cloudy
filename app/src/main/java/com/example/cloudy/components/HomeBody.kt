@@ -22,6 +22,8 @@ fun HomeBody(
     modifier: Modifier = Modifier,
     location: String,
     lastFetchTime: String,
+    temperature: String,
+    weatherType: String,
     @DrawableRes img: Int
 ) {
 
@@ -37,7 +39,7 @@ fun HomeBody(
             text = lastFetchTime,
             style = typography.h2,
             modifier = Modifier.paddingFromBaseline(
-                top = 16.dp, bottom = 8.dp
+                top = 24.dp, bottom = 8.dp
             )
         )
         Image(
@@ -45,6 +47,18 @@ fun HomeBody(
             contentDescription = null,
             modifier = Modifier
                 .size(104.dp)
+        )
+
+        Text(
+            text = "${temperature}°C",
+            style = typography.h1
+        )
+        Text(
+            text = weatherType,
+            style = typography.h2,
+            modifier = Modifier.paddingFromBaseline(
+                top = 24.dp, bottom = 8.dp
+            )
         )
     }
 }
@@ -55,7 +69,9 @@ private fun HomeHeaderPreview() {
     HomeBody(
         modifier = Modifier.fillMaxWidth(),
         location = "San Francisco, CA",
-        lastFetchTime = "Wednesday, Oct 5",
-        img = R.drawable.ic_storm
+        lastFetchTime = "Wednesday, Oct 5, 09:15 PM",
+        img = R.drawable.ic_storm,
+        temperature = "13.55",
+        weatherType = "Clear Sky"
     )
 }
