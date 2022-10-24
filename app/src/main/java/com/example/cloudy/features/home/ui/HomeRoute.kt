@@ -1,16 +1,12 @@
 package com.example.cloudy.features.home.ui
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cloudy.R
@@ -21,8 +17,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lyvetech.cloudy.core.component.WeatherTopAppBar
-import java.util.*
-import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -49,13 +43,12 @@ internal fun HomeScreen(
     viewModel: HomeViewModel,
 
     ) {
-    val addresses: List<Address>
-    val geocoder: Geocoder = Geocoder(LocalContext.current, Locale.getDefault())
 
     Scaffold(
         topBar = {
             WeatherTopAppBar(
-                titleRes = R.string.app_name, modifier = modifier
+                titleRes = R.string.app_name,
+                modifier = modifier
             )
         }, modifier = Modifier.fillMaxSize()
     ) { paddingValues ->
@@ -68,7 +61,8 @@ internal fun HomeScreen(
             uiState.weatherInfo?.let { weatherInfo ->
                 weatherInfo.currentWeatherData?.let {
                     Column(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         HomeBody(
                             modifier = Modifier
@@ -80,29 +74,12 @@ internal fun HomeScreen(
                             temperature = it.temperatureCelsius.toString(),
                             weatherType = it.weatherType.weatherDesc
                         )
+                        Spacer(modifier = Modifier.height(56.dp))
 
-//                        Row(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            horizontalArrangement = Arrangement.SpaceAround
-//                        ) {
-//                            WeatherDataDisplay(
-//                                value = it.pressure.roundToInt(),
-//                                unit = "hpa",
-//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm),
-//                            )
-//
-//                            WeatherDataDisplay(
-//                                value = it.humidity.roundToInt(),
-//                                unit = "%",
-//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
-//                            )
-//
-//                            WeatherDataDisplay(
-//                                value = it.windSpeed.roundToInt(),
-//                                unit = "km/h",
-//                                icon = ImageVector.vectorResource(id = R.drawable.ic_storm)
-//                            )
-//                        }
+                        WeatherDataDisplay(
+                            modifier = Modifier.paddingFromBaseline(top = 56.dp),
+                            weatherData = it
+                        )
                     }
                 }
             }
