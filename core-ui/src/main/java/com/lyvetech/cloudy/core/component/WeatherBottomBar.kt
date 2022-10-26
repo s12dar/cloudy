@@ -18,7 +18,7 @@ fun CloudyBottomNav(
 }
 
 @Composable
-fun RowScope.NiaNavigationBarItem(
+fun RowScope.CloudyBottomNavItem(
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,

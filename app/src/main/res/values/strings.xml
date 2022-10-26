@@ -3,4 +3,8 @@
     <string name="weather_humidity">Humidity</string>
     <string name="weather_pressure">Pressure</string>
     <string name="weather_wind_speed">Wind Speed</string>
+
+    <!-- bottom nav -->
+    <string name="bottom_nav_home">Home</string>
+    <string name="bottom_nav_settings">Settings</string>
 </resources>

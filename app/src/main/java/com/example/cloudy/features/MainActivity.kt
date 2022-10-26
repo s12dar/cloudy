@@ -10,7 +10,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cloudy.features.home.ui.HomeScreen
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +34,7 @@ class MainActivity : ComponentActivity() {
         Stetho.initializeWithDefaults(this)
         setContent {
             CloudyTheme {
-                HomeScreen()
+                MainContent()
             }
         }
     }
