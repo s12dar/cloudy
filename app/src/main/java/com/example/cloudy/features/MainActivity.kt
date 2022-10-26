@@ -7,12 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.cloudy.features.home.ui.HomeScreen
-import com.example.cloudy.features.home.ui.HomeViewModel
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import dagger.hilt.android.AndroidEntryPoint
