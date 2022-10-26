@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.cloudy.features.home.ui.HomeRoute
+import com.example.cloudy.features.home.ui.HomeScreen
 import com.example.cloudy.features.home.ui.HomeViewModel
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
@@ -19,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: HomeViewModel by viewModels()
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -27,9 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-            viewModel.loadWeatherInfo()
-        }
+        ) { }
         permissionLauncher.launch(
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -40,7 +37,7 @@ class MainActivity : ComponentActivity() {
         Stetho.initializeWithDefaults(this)
         setContent {
             CloudyTheme {
-                HomeRoute()
+                HomeScreen()
             }
         }
     }

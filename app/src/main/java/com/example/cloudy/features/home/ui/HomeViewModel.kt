@@ -3,17 +3,16 @@ package com.example.cloudy.features.home.ui
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cloudy.core.util.Resource
+import com.example.cloudy.core.ui.UiState
+import com.example.cloudy.features.home.data.repository.WeatherRepository
+import com.example.cloudy.features.home.domain.service.LocationTracker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import com.example.cloudy.features.home.data.repository.WeatherRepository
-import com.example.cloudy.features.home.domain.service.LocationTracker
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -21,42 +20,31 @@ class HomeViewModel @Inject constructor(
     private val locationTracker: LocationTracker
 ) : ViewModel() {
 
-    var state by mutableStateOf(HomeScreenState())
-        private set
+    private val uiState = mutableStateOf<UiState<HomeScreenState>>(UiState.Loading)
+    fun getUiState(): State<UiState<HomeScreenState>> = uiState
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SuspiciousIndentation")
-    fun loadWeatherInfo() {
+    fun getWeatherInfo() {
         viewModelScope.launch {
-            state = state.copy(
-                isLoading = true,
-                error = null
-            )
+            uiState.value = UiState.Loading
 
             locationTracker.getCurrentLocation().data?.let { location ->
-                when (val result =
-                    repository.getWeatherInfo(location.latitude, location.longitude)) {
-                    is Resource.Success -> {
-                        state = state.copy(
-                            weatherInfo = result.data,
-                            isLoading = false,
-                            error = null
+                try {
+                    uiState.value = UiState.Success(
+                        HomeScreenState(
+                            weatherInfo = repository.getWeatherInfo(
+                                location.latitude,
+                                location.longitude
+                            ).data
                         )
-                    }
-                    is Resource.Error -> {
-                        state = state.copy(
-                            weatherInfo = null,
-                            isLoading = false,
-                            error = result.message
-                        )
-                    }
-                    else -> {}
+                    )
+                } catch (e: Exception) {
+                    uiState.value = UiState.Error(e.toString())
                 }
             } ?: kotlin.run {
-                state = state.copy(
-                    isLoading = false,
-                    error = "Couldn't retrieve location. Make sure to grant location permission"
-                )
+                uiState.value =
+                    UiState.Error("Couldn't retrieve location. Make sure you grant location permissions")
             }
         }
     }
