@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.example.cloudy.R
 import com.example.cloudy.features.home.ui.HomeScreen
+import com.example.cloudy.features.settings.ui.SettingsScreen
 import com.lyvetech.cloudy.core.component.WeatherTopAppBar
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -57,7 +58,7 @@ fun MainContent() {
     ) {
         when (selectedTab) {
             CloudyTabs.Home -> HomeScreen(modifier = Modifier.padding(it))
-            CloudyTabs.Settings -> HomeScreen(modifier = Modifier.padding(it))
+            CloudyTabs.Settings -> SettingsScreen(modifier = Modifier.padding(it))
         }
     }
 }

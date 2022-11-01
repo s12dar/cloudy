@@ -26,7 +26,6 @@ fun HomeBody(
     weatherType: String,
     @DrawableRes img: Int
 ) {
-
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -37,7 +36,7 @@ fun HomeBody(
         )
         Text(
             text = lastFetchTime,
-            style = typography.h2,
+            style = typography.h3,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
@@ -55,7 +54,7 @@ fun HomeBody(
         )
         Text(
             text = weatherType,
-            style = typography.h2,
+            style = typography.h3,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )

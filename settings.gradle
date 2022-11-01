@@ -16,3 +16,4 @@ rootProject.name = "cloudy"
 include ':app'
 include ':core-ui'
 include ':core-navigation'
+include ':feature-settings'

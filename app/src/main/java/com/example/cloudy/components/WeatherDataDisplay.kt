@@ -66,14 +66,14 @@ fun WeatherDataElement(
         )
         Text(
             text = stringResource(id = text),
-            style = typography.h2,
+            style = typography.h3,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
         )
         Text(
             text = value,
-            style = typography.h2,
+            style = typography.h3,
             modifier = Modifier.paddingFromBaseline(
                 top = 8.dp, bottom = 8.dp
             )
