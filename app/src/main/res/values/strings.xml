@@ -10,14 +10,14 @@
 
     <!-- settings screen -->
     <string name="theme">Theme</string>
+    <string name="choose_theme">Choose your preferred theme</string>
     <string name="temperature_unit">Temperature unit</string>
     <string name="speed_unit">Speed unit</string>
     <string name="unit_fahrenheit">Fahrenheit/°F</string>
     <string name="unit_celsius">Celsius/°C</string>
-    <string name="theme_light">Light theme</string>
-    <string name="theme_dark">Dark theme</string>
-    <string name="theme_auto_battery">Auto battery</string>
-    <string name="theme_system">System default</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="system_default">System default</string>
     <string name="general_settings">General Settings</string>
     <string name="other_settings">Other Settings</string>
     <string name="share_application">Share us</string>
@@ -28,5 +28,7 @@
     <string name="give_feedbacks">Share your feedbacks with us</string>
     <string name="version">Version: 1.2.1</string>
     <string name="app_version">Current app version</string>
+    <string name="close">Close</string>
+    <string name="ok">OK</string>
 
 </resources>

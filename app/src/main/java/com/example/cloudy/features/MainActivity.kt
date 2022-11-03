@@ -8,8 +8,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cloudy.features.settings.data.datastore.ThemeSelection
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,8 +37,18 @@ class MainActivity : ComponentActivity() {
 
         Stetho.initializeWithDefaults(this)
         setContent {
-            CloudyTheme {
-                MainContent()
+            val viewModel: MainViewModel = hiltViewModel()
+            val appPreferences = viewModel.appPreferences.observeAsState()
+
+            appPreferences.value?.let { preferences ->
+                val darkTheme = when (preferences.selectedTheme) {
+                    ThemeSelection.SYSTEM -> isSystemInDarkTheme()
+                    ThemeSelection.LIGHT -> false
+                    ThemeSelection.DARK -> true
+                }
+                CloudyTheme(darkTheme = darkTheme) {
+                    MainContent()
+                }
             }
         }
     }

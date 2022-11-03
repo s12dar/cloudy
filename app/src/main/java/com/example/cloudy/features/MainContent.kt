@@ -58,7 +58,9 @@ fun MainContent() {
     ) {
         when (selectedTab) {
             CloudyTabs.Home -> HomeScreen(modifier = Modifier.padding(it))
-            CloudyTabs.Settings -> SettingsScreen(modifier = Modifier.padding(it))
+            CloudyTabs.Settings -> SettingsScreen(
+                modifier = Modifier.padding(it)
+            )
         }
     }
 }
