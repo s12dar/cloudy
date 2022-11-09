@@ -1,6 +1,7 @@
 package com.example.cloudy.features.home.ui
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +20,7 @@ import com.example.cloudy.components.HomeBody
 import com.example.cloudy.components.WeatherDataDisplay
 import com.example.cloudy.core.ui.UiState
 import com.example.cloudy.features.home.data.util.formatDate
+import com.example.cloudy.features.settings.data.util.convertCelsiusToFahrenheit
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -32,11 +35,16 @@ fun HomeScreen(
 
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = uiState is UiState.Loading)
 
+//    val hi = (uiState as UiState.Success).data.appPreferences.collectAsState(initial = )
+
     val scrollState = rememberScrollState()
 
     when (uiState) {
         is UiState.Success -> {
             val viewState = (uiState as UiState.Success).data
+            val selectedTempUnit = viewState.appPreferences.collectAsState(
+                HomeScreenState.appPreferencesInitialState
+            ).value.selectedTempUnit
 
             SwipeRefresh(
                 state = swipeRefreshState,
@@ -58,7 +66,9 @@ fun HomeScreen(
                                 location = weatherInfo.location,
                                 lastFetchTime = weatherInfo.formatDate(),
                                 img = it.weatherType.iconRes,
-                                temperature = it.temperatureCelsius.toString(),
+                                temperature = if (selectedTempUnit.toString() == "FAHRENHEIT") "${
+                                    convertCelsiusToFahrenheit(it.temperatureCelsius)
+                                }°F" else "${it.temperatureCelsius}°C",
                                 weatherType = it.weatherType.weatherDesc
                             )
                             Spacer(modifier = Modifier.height(56.dp))
@@ -75,7 +85,7 @@ fun HomeScreen(
         }
 
         is UiState.Error -> {
-            // TODO
+            Log.i("serdar", "can't")
         }
 
         is UiState.Loading -> {
@@ -85,7 +95,6 @@ fun HomeScreen(
                 )
             }
         }
-
     }
 
     LaunchedEffect(Unit) {

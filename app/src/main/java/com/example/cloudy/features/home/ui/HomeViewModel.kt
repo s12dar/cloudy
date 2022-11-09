@@ -6,10 +6,12 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.cloudy.core.ui.UiState
 import com.example.cloudy.features.home.data.repository.WeatherRepository
 import com.example.cloudy.features.home.domain.service.LocationTracker
+import com.example.cloudy.features.settings.data.datastore.PreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,10 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: WeatherRepository,
-    private val locationTracker: LocationTracker
+    private val locationTracker: LocationTracker,
+    private val preferencesManager: PreferencesManager
 ) : ViewModel() {
 
     private val uiState = mutableStateOf<UiState<HomeScreenState>>(UiState.Loading)
+    private val appPreferences = preferencesManager.appPreferences
     fun getUiState(): State<UiState<HomeScreenState>> = uiState
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -36,7 +40,8 @@ class HomeViewModel @Inject constructor(
                             weatherInfo = repository.getWeatherInfo(
                                 location.latitude,
                                 location.longitude
-                            ).data
+                            ).data,
+                            appPreferences = appPreferences
                         )
                     )
                 } catch (e: Exception) {

@@ -32,7 +32,6 @@ class SettingsViewModel @Inject constructor(
             showThemeDialog = showThemeDialog,
             showTempUnitDialog = showTempUnitDialog
         )
-
     }.asLiveData()
 
     override fun onThemePreferenceClicked() {

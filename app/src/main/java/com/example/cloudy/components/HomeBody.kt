@@ -49,7 +49,7 @@ fun HomeBody(
         )
 
         Text(
-            text = "${temperature}°C",
+            text = temperature,
             style = typography.h1
         )
         Text(

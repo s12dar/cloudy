@@ -34,7 +34,7 @@ data class AppPreferences(
 
 @Singleton
 class DefaultPreferencesManager @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @ApplicationContext private val context: Context
 ) : PreferencesManager {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
 
@@ -69,6 +69,14 @@ class DefaultPreferencesManager @Inject constructor(
     override suspend fun updatedSelectedTempUnit(tempUnit: TempUnitSelection) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.SELECTED_TEMP_UNIT] = tempUnit.name
+        }
+    }
+
+    override suspend fun getTempUnitSelection(): Flow<TempUnitSelection> {
+        return context.dataStore.data.map { preferences ->
+            TempUnitSelection.valueOf(
+                preferences[PreferencesKeys.SELECTED_TEMP_UNIT] ?: TempUnitSelection.CELSIUS.name
+            )
         }
     }
 
