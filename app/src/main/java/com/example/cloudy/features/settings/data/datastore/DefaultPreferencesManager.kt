@@ -44,7 +44,7 @@ class DefaultPreferencesManager @Inject constructor(
         }
         .map { preferences ->
             val selectedTheme = ThemeSelection.valueOf(
-                preferences[PreferencesKeys.SELECTED_THEME].toString()
+                preferences[PreferencesKeys.SELECTED_THEME] ?: ThemeSelection.SYSTEM.name
             )
             AppPreferences(
                 selectedTheme = selectedTheme,

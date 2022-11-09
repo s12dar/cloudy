@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val preferencesManager: PreferencesManager
+    preferencesManager: PreferencesManager
 ) : ViewModel() {
     val appPreferences = preferencesManager.appPreferences.asLiveData()
 }
