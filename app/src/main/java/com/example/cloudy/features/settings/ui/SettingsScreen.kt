@@ -58,56 +58,55 @@ fun SettingsScreen(
         )
     }
 
-    Surface {
-        Column(modifier = Modifier.fillMaxSize()) {
-            GeneralSettingsSection(
-                title = R.string.general_settings,
-                modifier = modifier
-            ) {
-                SettingsItem(
-                    title = R.string.theme,
-                    value = selectedTheme.readableName,
-                    icon = Icons.Filled.DarkMode,
-                    onClick = { actions.onThemePreferenceClicked() }
-                )
-                SettingsItem(
-                    title = R.string.temperature_unit,
-                    value = selectedTempUnit.readableName,
-                    icon = Icons.Filled.Cloud,
-                    onClick = { actions.onTempUnitPreferenceClicked() }
-                )
-            }
-            OtherSettingsSection(
-                title = R.string.other_settings,
-                modifier = modifier
-            ) {
-                SettingsItem(
-                    title = R.string.share_application,
-                    value = R.string.invite_friends,
-                    icon = Icons.Filled.Share,
-                    onClick = { }
-                )
-                SettingsItem(
-                    title = R.string.report_issue,
-                    value = R.string.help_us,
-                    icon = Icons.Filled.BugReport,
-                    onClick = { }
-                )
-                SettingsItem(
-                    title = R.string.rate_us,
-                    value = R.string.give_feedbacks,
-                    icon = Icons.Filled.Star,
-                    onClick = { }
-                )
-                SettingsItem(
-                    title = R.string.version,
-                    value = R.string.app_version,
-                    icon = Icons.Filled.Code,
-                    onClick = { }
-                )
-            }
+    Column(modifier = Modifier.fillMaxSize()) {
+        GeneralSettingsSection(
+            title = R.string.general_settings,
+            modifier = modifier
+        ) {
+            SettingsItem(
+                title = R.string.theme,
+                value = selectedTheme.readableName,
+                icon = Icons.Filled.DarkMode,
+                onClick = { actions.onThemePreferenceClicked() }
+            )
+            SettingsItem(
+                title = R.string.temperature_unit,
+                value = selectedTempUnit.readableName,
+                icon = Icons.Filled.Cloud,
+                onClick = { actions.onTempUnitPreferenceClicked() }
+            )
+        }
+        OtherSettingsSection(
+            title = R.string.other_settings,
+            modifier = modifier
+        ) {
+            SettingsItem(
+                title = R.string.share_application,
+                value = R.string.invite_friends,
+                icon = Icons.Filled.Share,
+                onClick = { }
+            )
+            SettingsItem(
+                title = R.string.report_issue,
+                value = R.string.help_us,
+                icon = Icons.Filled.BugReport,
+                onClick = { }
+            )
+            SettingsItem(
+                title = R.string.rate_us,
+                value = R.string.give_feedbacks,
+                icon = Icons.Filled.Star,
+                onClick = { }
+            )
+            SettingsItem(
+                title = R.string.version,
+                value = R.string.app_version,
+                icon = Icons.Filled.Code,
+                onClick = { }
+            )
         }
     }
+
 }
 
 @ComposeCompilerApi
