@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cloudy.components.HomeBody
 import com.example.cloudy.components.WeatherDataDisplay
 import com.example.cloudy.core.ui.UiState
+import com.example.cloudy.core.util.Constants
 import com.example.cloudy.features.home.data.util.formatDate
 import com.example.cloudy.features.settings.data.util.convertCelsiusToFahrenheit
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -34,8 +35,6 @@ fun HomeScreen(
     val uiState by viewModel.getUiState()
 
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = uiState is UiState.Loading)
-
-//    val hi = (uiState as UiState.Success).data.appPreferences.collectAsState(initial = )
 
     val scrollState = rememberScrollState()
 
@@ -66,9 +65,9 @@ fun HomeScreen(
                                 location = weatherInfo.location,
                                 lastFetchTime = weatherInfo.formatDate(),
                                 img = it.weatherType.iconRes,
-                                temperature = if (selectedTempUnit.toString() == "FAHRENHEIT") "${
+                                temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
                                     convertCelsiusToFahrenheit(it.temperatureCelsius)
-                                }°F" else "${it.temperatureCelsius}°C",
+                                }${Constants.FAHRENHEIT_SIGN}" else "${it.temperatureCelsius}${Constants.CELSIUS_SIGN}",
                                 weatherType = it.weatherType.weatherDesc
                             )
                             Spacer(modifier = Modifier.height(56.dp))
