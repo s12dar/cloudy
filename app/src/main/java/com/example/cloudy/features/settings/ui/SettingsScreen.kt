@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cloudy.R
 import com.example.cloudy.components.LabelledRadioButton
+import com.example.cloudy.features.settings.data.datastore.TempUnitSelection
 import com.example.cloudy.features.settings.data.datastore.ThemeSelection
 import com.lyvetech.cloudy.core.theme.typography
 
@@ -29,6 +30,7 @@ fun SettingsScreen(
     val uiState = viewModel.uiState.observeAsState(SettingsScreenState.initialState)
     val actions: SettingsScreenActions = viewModel
     val selectedTheme = uiState.value.appPreferences.selectedTheme
+    val selectedTempUnit = uiState.value.appPreferences.selectedTempUnit
 
     if (uiState.value.showThemeDialog) {
         SingleChoiceDialog(
@@ -40,6 +42,19 @@ fun SettingsScreen(
                 actions.onThemeUpdated(ThemeSelection.values()[index])
             },
             onDismissRequest = { actions.onThemeDialogDismissed() }
+        )
+    }
+
+    if (uiState.value.showTempUnitDialog) {
+        SingleChoiceDialog(
+            title = stringResource(id = R.string.temperature_unit),
+            options = TempUnitSelection.values().toList()
+                .map { stringResource(id = it.readableName) },
+            initialSelectedOptionIndex = TempUnitSelection.values().indexOf(selectedTempUnit),
+            onConfirmed = { index ->
+                actions.onTempUnitUpdated(TempUnitSelection.values()[index])
+            },
+            onDismissRequest = { actions.onTempUnitDialogDismissed() }
         )
     }
 
@@ -57,9 +72,9 @@ fun SettingsScreen(
                 )
                 SettingsItem(
                     title = R.string.temperature_unit,
-                    value = selectedTheme.readableName,
+                    value = selectedTempUnit.readableName,
                     icon = Icons.Filled.Cloud,
-                    onClick = { }
+                    onClick = { actions.onTempUnitPreferenceClicked() }
                 )
             }
             OtherSettingsSection(

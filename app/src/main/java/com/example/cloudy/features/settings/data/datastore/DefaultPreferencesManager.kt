@@ -23,8 +23,13 @@ enum class ThemeSelection(@StringRes val readableName: Int) {
     SYSTEM(R.string.system_default), LIGHT(R.string.light), DARK(R.string.dark)
 }
 
+enum class TempUnitSelection(@StringRes val readableName: Int) {
+    FAHRENHEIT(R.string.unit_fahrenheit), CELSIUS(R.string.unit_celsius)
+}
+
 data class AppPreferences(
-    val selectedTheme: ThemeSelection
+    val selectedTheme: ThemeSelection,
+    val selectedTempUnit: TempUnitSelection
 )
 
 @Singleton
@@ -46,8 +51,12 @@ class DefaultPreferencesManager @Inject constructor(
             val selectedTheme = ThemeSelection.valueOf(
                 preferences[PreferencesKeys.SELECTED_THEME] ?: ThemeSelection.SYSTEM.name
             )
+            val selectedTempUnit = TempUnitSelection.valueOf(
+                preferences[PreferencesKeys.SELECTED_TEMP_UNIT] ?: TempUnitSelection.CELSIUS.name
+            )
             AppPreferences(
                 selectedTheme = selectedTheme,
+                selectedTempUnit = selectedTempUnit
             )
         }
 
@@ -57,7 +66,14 @@ class DefaultPreferencesManager @Inject constructor(
         }
     }
 
+    override suspend fun updatedSelectedTempUnit(tempUnit: TempUnitSelection) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SELECTED_TEMP_UNIT] = tempUnit.name
+        }
+    }
+
     private object PreferencesKeys {
         val SELECTED_THEME = stringPreferencesKey("SELECTED_THEME")
+        val SELECTED_TEMP_UNIT = stringPreferencesKey("SELECTED_TEMP_UNIT")
     }
 }
