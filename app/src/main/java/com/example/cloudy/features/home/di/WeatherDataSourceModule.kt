@@ -1,9 +1,9 @@
 package com.example.cloudy.features.home.di
 
-import com.example.cloudy.features.home.data.local.WeatherLocalDataSource
-import com.example.cloudy.features.home.data.local.WeatherLocalDataSourceImpl
-import com.example.cloudy.features.home.data.remote.WeatherRemoteDataSource
-import com.example.cloudy.features.home.data.remote.WeatherRemoteDataSourceImpl
+import com.example.cloudy.features.home.data.local.HomeLocalDataSource
+import com.example.cloudy.features.home.data.local.HomeLocalDataSourceImpl
+import com.example.cloudy.features.home.data.remote.HomeRemoteDataSource
+import com.example.cloudy.features.home.data.remote.HomeRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class WeatherDataSourceModule {
 
     @Binds
-    abstract fun bindLocalDataSource(localDataSourceImpl: WeatherLocalDataSourceImpl): WeatherLocalDataSource
+    abstract fun bindLocalDataSource(localDataSourceImpl: HomeLocalDataSourceImpl): HomeLocalDataSource
 
     @Binds
-    abstract fun bindRemoteDataSource(remoteDataSource: WeatherRemoteDataSourceImpl): WeatherRemoteDataSource
+    abstract fun bindRemoteDataSource(remoteDataSource: HomeRemoteDataSourceImpl): HomeRemoteDataSource
 }

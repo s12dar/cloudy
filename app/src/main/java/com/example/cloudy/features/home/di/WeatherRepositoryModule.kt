@@ -1,7 +1,7 @@
 package com.example.cloudy.features.home.di
 
-import com.example.cloudy.features.home.data.repository.WeatherRepository
-import com.example.cloudy.features.home.data.repository.WeatherRepositoryImpl
+import com.example.cloudy.features.home.data.repository.HomeRepository
+import com.example.cloudy.features.home.data.repository.HomeRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,5 +16,5 @@ abstract class WeatherRepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindRepository(repository: WeatherRepositoryImpl): WeatherRepository
+    abstract fun bindRepository(repository: HomeRepositoryImpl): HomeRepository
 }

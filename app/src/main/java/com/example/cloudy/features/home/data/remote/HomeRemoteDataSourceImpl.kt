@@ -10,10 +10,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class WeatherRemoteDataSourceImpl @Inject constructor(
+class HomeRemoteDataSourceImpl @Inject constructor(
     private val apiService: WeatherApiService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : WeatherRemoteDataSource {
+) : HomeRemoteDataSource {
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeather(lat: Double, long: Double): Resource<WeatherDto> =
         withContext(ioDispatcher) {

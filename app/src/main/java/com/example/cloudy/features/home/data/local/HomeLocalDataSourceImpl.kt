@@ -7,10 +7,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class WeatherLocalDataSourceImpl @Inject constructor(
+class HomeLocalDataSourceImpl @Inject constructor(
     private val weatherDao: WeatherDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : WeatherLocalDataSource {
+) : HomeLocalDataSource {
     override suspend fun insertWeather(weather: WeatherEntity) =
         withContext(ioDispatcher) {
             weatherDao.insertWeather(weatherData = weather)
