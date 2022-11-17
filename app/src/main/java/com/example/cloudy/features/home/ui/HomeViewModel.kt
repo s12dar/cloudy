@@ -37,8 +37,7 @@ class HomeViewModel @Inject constructor(
                     uiState.value = UiState.Success(
                         HomeScreenState(
                             weatherInfo = repository.getWeatherInfo(
-                                location.latitude,
-                                location.longitude
+                                location
                             ).data,
                             appPreferences = appPreferences
                         )

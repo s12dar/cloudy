@@ -4,9 +4,9 @@ import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
+import com.example.cloudy.core.domain.model.LocationModel
 import com.example.cloudy.core.util.Resource
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -19,7 +19,7 @@ class LocationTrackerImpl @Inject constructor(
 ) : LocationTracker {
 
     override suspend fun getCurrentLocation():
-            Resource<Location?> = suspendCancellableCoroutine { cont ->
+            Resource<LocationModel?> = suspendCancellableCoroutine { cont ->
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -46,7 +46,7 @@ class LocationTrackerImpl @Inject constructor(
         locationClient.lastLocation.apply {
             if (isComplete) {
                 if (isSuccessful)
-                    cont.resume(Resource.Success(result))
+                    cont.resume(Resource.Success(LocationModel(result.latitude, result.longitude)))
                 else cont.resume(
                     Resource.Error(
                         null,
@@ -56,7 +56,7 @@ class LocationTrackerImpl @Inject constructor(
                 return@suspendCancellableCoroutine
             }
             addOnSuccessListener {
-                cont.resume(Resource.Success(it))
+                cont.resume(Resource.Success(LocationModel(it.latitude, it.longitude)))
             }
             addOnFailureListener {
                 cont.resume(

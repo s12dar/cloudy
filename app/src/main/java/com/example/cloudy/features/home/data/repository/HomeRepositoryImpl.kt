@@ -1,9 +1,9 @@
 package com.example.cloudy.features.home.data.repository
 
-import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.cloudy.core.di.IoDispatcher
+import com.example.cloudy.core.domain.model.LocationModel
 import com.example.cloudy.core.util.Resource
 import com.example.cloudy.features.home.data.local.HomeLocalDataSource
 import com.example.cloudy.features.home.data.local.entity.WeatherEntity
@@ -12,7 +12,6 @@ import com.example.cloudy.features.home.data.mapper.toWeatherLocal
 import com.example.cloudy.features.home.data.remote.HomeRemoteDataSource
 import com.example.cloudy.features.home.data.remote.dto.WeatherDto
 import com.example.cloudy.features.home.domain.model.WeatherInfo
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -20,19 +19,19 @@ import javax.inject.Inject
 class HomeRepositoryImpl @Inject constructor(
     private val remoteDataSource: HomeRemoteDataSource,
     private val localDataSource: HomeLocalDataSource,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    @ApplicationContext private val appContext: Context
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+//    @ApplicationContext private val appContext: Context
 ) : HomeRepository {
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getWeatherInfo(
-        lat: Double,
-        long: Double
+        location: LocationModel
     ): Resource<WeatherInfo> =
         withContext(ioDispatcher) {
             fetchWeatherFromLocal()?.takeIf { !it.isExpired() }
-                ?.let { Resource.Success(it.toWeatherInfo(appContext)) }
+                ?.let { Resource.Success(it.toWeatherInfo()) }
                 ?: run {
-                    when (val result = remoteDataSource.getWeather(lat, long)) {
+                    when (val result =
+                        remoteDataSource.getWeather(location)) {
                         is Resource.Success -> {
                             localDataSource.deleteAllWeather()
                             result.data?.let {
@@ -40,11 +39,11 @@ class HomeRepositoryImpl @Inject constructor(
                                     it
                                 )
                             }
-                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo(appContext)
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
                             Resource.Success(localResult)
                         }
                         is Resource.Error -> {
-                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo(appContext)
+                            val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
                             Resource.Error(localResult, result.message)
                         }
                         else -> {
