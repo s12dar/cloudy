@@ -1,15 +1,11 @@
 package com.example.cloudy.features.home.data.repository
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.cloudy.core.util.Resource
 import com.example.cloudy.features.home.data.local.HomeLocalDataSource
 import com.example.cloudy.features.home.data.remote.HomeRemoteDataSource
-import com.example.cloudy.utils.dummyLocation
-import com.example.cloudy.utils.fakeNotExpiredWeatherEntity
-import com.example.cloudy.utils.fakeNotExpiredWeatherInfo
-import com.example.cloudy.utils.`should be`
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.coVerify
+import com.example.cloudy.utils.*
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -59,7 +55,7 @@ class HomeRepositoryImplTest {
     }
 
     @Test
-    fun `check that getWeather with data is expired fetches successfully from the local source`() {
+    fun `check that getWeather with data is not expired fetches successfully from the local source`() {
         runBlocking {
             coEvery {
                 homeLocalDataSource.getWeather()
@@ -75,10 +71,33 @@ class HomeRepositoryImplTest {
         }
     }
 
-//    @Test
-//    fun `check that getWeather with data is not expired fetches successfully from the local source`() {
-//        runBlocking {
-//
-//        }
-//    }
+    @Test
+    fun `check that getWeather with data is expired fetches successfully from the remote source`() {
+        runBlocking {
+
+            coEvery {
+                homeLocalDataSource.getWeather()
+            } returns fakeExpiredWeatherEntity
+
+            coEvery {
+                homeRemoteDataSource.getWeather(dummyLocation)
+            } returns Resource.Success(fakeWeatherDto)
+
+            coEvery {
+                homeLocalDataSource.deleteAllWeather()
+            } just Runs
+
+            coEvery {
+                homeLocalDataSource.insertWeather(any())
+            } just Runs
+
+            val result = systemUnderTest.getWeatherInfo(dummyLocation)
+
+            result.data `should be` fakeExpiredWeatherInfo
+            coVerify(exactly = 2) { homeLocalDataSource.getWeather() }
+            coVerify(exactly = 1) { homeRemoteDataSource.getWeather(any()) }
+            coVerify(exactly = 1) { homeLocalDataSource.deleteAllWeather() }
+            coVerify(exactly = 1) { homeLocalDataSource.insertWeather(any()) }
+        }
+    }
 }
