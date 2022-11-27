@@ -83,9 +83,7 @@ fun HomeScreen(
             }
         }
 
-        is UiState.Error -> {
-            Log.i("serdar", "can't")
-        }
+        is UiState.Error -> {}
 
         is UiState.Loading -> {
             Box(modifier = Modifier.fillMaxSize()) {
