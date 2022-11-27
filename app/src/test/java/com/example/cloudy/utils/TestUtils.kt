@@ -7,6 +7,10 @@ import com.example.cloudy.features.home.data.mapper.toWeatherInfo
 import com.example.cloudy.features.home.data.mapper.toWeatherLocal
 import com.example.cloudy.features.home.data.remote.dto.WeatherDataDto
 import com.example.cloudy.features.home.data.remote.dto.WeatherDto
+import com.example.cloudy.features.settings.data.datastore.AppPreferences
+import com.example.cloudy.features.settings.data.datastore.TempUnitSelection
+import com.example.cloudy.features.settings.data.datastore.ThemeSelection
+import kotlinx.coroutines.flow.flow
 
 val fakeWeatherDataDto = WeatherDataDto(
     time = listOf(
@@ -60,3 +64,10 @@ val dummyLocation = LocationModel(
     latitude = 12.0,
     longitude = 12.0
 )
+
+val fakeAppPreferences = flow<AppPreferences> {
+    AppPreferences(
+        selectedTheme = ThemeSelection.DARK,
+        selectedTempUnit = TempUnitSelection.FAHRENHEIT
+    )
+}

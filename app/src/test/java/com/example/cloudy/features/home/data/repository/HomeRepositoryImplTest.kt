@@ -32,7 +32,7 @@ class HomeRepositoryImplTest {
     @MockK
     private lateinit var homeLocalDataSource: HomeLocalDataSource
 
-    private val mainThreadSurrogate = newSingleThreadContext("thread")
+    private val mainThreadSurrogate = newSingleThreadContext("threading")
 
 
     @Before

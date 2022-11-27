@@ -43,11 +43,11 @@ class HomeViewModel @Inject constructor(
                         )
                     )
                 } catch (e: Exception) {
-                    uiState.value = UiState.Error(e.toString())
+                    uiState.value = UiState.Error(Exception(e))
                 }
             } ?: kotlin.run {
                 uiState.value =
-                    UiState.Error("Couldn't retrieve location. Make sure you grant location permissions")
+                    UiState.Error(Exception("Couldn't retrieve location. Make sure you grant location permissions"))
             }
         }
     }
