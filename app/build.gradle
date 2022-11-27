@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.cloudy'
+    namespace 'com.lyvetech.cloudy'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.cloudy"
+        applicationId "com.lyvetech.cloudy"
         minSdk 24
         targetSdk 33
         versionCode 1
