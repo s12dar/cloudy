@@ -1,6 +1,6 @@
 package com.lyvetech.cloudy.features.home.data.repository
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lyvetech.cloudy.core.util.Resource
 import com.lyvetech.cloudy.features.home.data.local.HomeLocalDataSource
 import com.lyvetech.cloudy.features.home.data.remote.HomeRemoteDataSource

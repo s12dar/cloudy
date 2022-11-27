@@ -82,8 +82,8 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
 
     //Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
+    implementation 'com.google.dagger:hilt-android:2.44.2'
+    kapt 'com.google.dagger:hilt-android-compiler:2.44.2'
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
@@ -96,7 +96,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3"
 
     // Lifecycle libs
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = '2.5.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
@@ -116,7 +116,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // Accompanist swipe refresh
-    implementation "com.google.accompanist:accompanist-swiperefresh:0.26.4-beta"
+    implementation 'com.google.accompanist:accompanist-swiperefresh:0.27.1'
 
     // Constraint layout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
