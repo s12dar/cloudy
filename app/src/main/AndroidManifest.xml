@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.cloudy">
+    package="com.lyvetech.cloudy">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -20,7 +20,7 @@
         android:theme="@style/Theme.Cloudy"
         tools:targetApi="s">
         <activity
-            android:name="com.example.cloudy.features.MainActivity"
+            android:name="com.lyvetech.cloudy.features.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Cloudy">
             <intent-filter>
