@@ -69,7 +69,7 @@ class HomeViewModelTest {
     fun `initial setup of viewModel uiState should return Loading`() {
 
         val currentState = systemUnderTest.getUiState()
-        currentState.value `should be` UiState.Error(Exception("playing around with fastlane"))
+        currentState.value `should be` UiState.Loading
     }
 
     @Test
