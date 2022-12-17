@@ -25,8 +25,6 @@ import com.lyvetech.cloudy.core.ui.UiState
 import com.lyvetech.cloudy.core.util.Constants
 import com.lyvetech.cloudy.features.home.data.util.formatDate
 import com.lyvetech.cloudy.features.settings.data.util.convertCelsiusToFahrenheit
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
