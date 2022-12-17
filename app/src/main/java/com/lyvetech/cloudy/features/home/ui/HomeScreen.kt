@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -24,6 +28,7 @@ import com.lyvetech.cloudy.features.settings.data.util.convertCelsiusToFahrenhei
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
+@OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
@@ -32,8 +37,10 @@ fun HomeScreen(
 ) {
 
     val uiState by viewModel.getUiState()
+    val isRefreshing = uiState is UiState.Loading
 
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = uiState is UiState.Loading)
+    val pullRefreshState =
+        rememberPullRefreshState(refreshing = isRefreshing, { viewModel.getWeatherInfo() })
 
     val scrollState = rememberScrollState()
 
@@ -44,12 +51,8 @@ fun HomeScreen(
                 HomeScreenState.appPreferencesInitialState
             ).value.selectedTempUnit
 
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = {
-                    viewModel.getWeatherInfo()
-                },
-                modifier = modifier
+            Box(
+                modifier = modifier.pullRefresh(pullRefreshState)
             ) {
                 viewState.weatherInfo?.let { weatherInfo ->
                     weatherInfo.currentWeatherData?.let {
@@ -76,6 +79,12 @@ fun HomeScreen(
                                 weatherData = it
                             )
                         }
+
+                        PullRefreshIndicator(
+                            refreshing = isRefreshing,
+                            state = pullRefreshState,
+                            modifier = Modifier.align(Alignment.TopCenter)
+                        )
                     }
                 }
 
