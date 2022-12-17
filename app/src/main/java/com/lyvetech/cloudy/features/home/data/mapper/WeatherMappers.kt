@@ -5,6 +5,7 @@ import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.lyvetech.cloudy.WeatherApplication
+import com.lyvetech.cloudy.core.domain.model.LocationModel
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherDataEntity
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherEntity
 import com.lyvetech.cloudy.features.home.data.remote.dto.WeatherDataDto
@@ -53,7 +54,7 @@ private fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
 fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
-    val location = manageLocation(latitude = latitude, longitude = longitude)
+    val location = LocationModel(latitude, longitude)
     val currentWeatherData = weatherDataMap[0]?.find {
         val hour = if (now.minute < 30) now.hour else now.hour + 1
         it.time.hour == hour
@@ -67,19 +68,19 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     )
 }
 
-private fun WeatherEntity.manageLocation(
-    latitude: Double,
-    longitude: Double
-): String {
-        val appContext = WeatherApplication.context
-        val geocoder = Geocoder(appContext, Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude, longitude, 1) as List<Address>
-        val cityName = addresses[0].getAddressLine(0)
-            .split(",")
-            .toTypedArray()
-
-       return cityName[1]
-}
+//fun WeatherEntity.manageLocation(
+//    latitude: Double,
+//    longitude: Double
+//): String {
+//        val appContext = WeatherApplication.context
+//        val geocoder = Geocoder(appContext, Locale.getDefault())
+//        val addresses = geocoder.getFromLocation(latitude, longitude, 1) as List<Address>
+//        val cityName = addresses[0].getAddressLine(0)
+//            .split(",")
+//            .toTypedArray()
+//
+//       return cityName[1]
+//}
 
 fun WeatherDto.toWeatherLocal(lastFetchTime: Long): WeatherEntity {
     val weatherDataLocal = weatherData.toWeatherDataLocal()

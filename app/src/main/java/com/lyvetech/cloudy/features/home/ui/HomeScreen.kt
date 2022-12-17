@@ -24,6 +24,7 @@ import com.lyvetech.cloudy.components.WeatherDataDisplay
 import com.lyvetech.cloudy.core.ui.UiState
 import com.lyvetech.cloudy.core.util.Constants
 import com.lyvetech.cloudy.features.home.data.util.formatDate
+import com.lyvetech.cloudy.features.home.data.util.manageLocation
 import com.lyvetech.cloudy.features.settings.data.util.convertCelsiusToFahrenheit
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -62,7 +63,7 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 8.dp, start = 8.dp, end = 8.dp),
-                                location = weatherInfo.location,
+                                location = manageLocation(weatherInfo.location),
                                 lastFetchTime = weatherInfo.formatDate(),
                                 img = it.weatherType.iconRes,
                                 temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
