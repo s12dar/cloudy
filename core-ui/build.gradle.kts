@@ -4,13 +4,11 @@ plugins {
 }
 
 android {
-    namespace = Configs.applicationId
+    namespace = Configs.coreUiId
     compileSdk = Configs.compileSdkVersion
 
     defaultConfig {
-        applicationId = Configs.applicationId
         minSdk = Configs.minSdkVersion
-        targetSdk = Configs.targetSdkVersion
 
         testInstrumentationRunner = Configs.testInstrumentationRunner
     }
@@ -56,5 +54,5 @@ dependencies {
     androidTestImplementation(Dependencies.espressoCore)
     androidTestImplementation(Dependencies.composeUiTest)
     debugImplementation(Dependencies.composeTooling)
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.2.0"
+    debugImplementation(Dependencies.testManifest)
 }

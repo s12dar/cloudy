@@ -4,6 +4,7 @@ object Versions {
     const val gradleVersion = "8.0.0-alpha08"
     const val kotlinVersion = "1.7.0"
     const val daggerHiltVersion = "2.44.2"
+    const val hiltVersion = "1.0.0"
     const val kotlinCompilerExtensionVersion = "1.2.0"
     const val retrofitVersion = "2.9.0"
     const val okHttpVersion = "5.0.0-alpha.3"
@@ -15,7 +16,7 @@ object Versions {
     const val espressoCoreVersion = "3.5.0"
     const val mockkVersion = "1.13.2"
     const val androidArchCoreTest = "2.1.0"
-    const val testMonitorVersion = "1.6.0"
+    const val testMonitorVersion = "1.2.0"
     const val testRunnerVersion = "1.5.1"
     const val composeVersion = "1.2.0"
     const val composeActivityVersion = "1.6.1"
@@ -33,4 +34,5 @@ object Versions {
     const val datastoreVersion = "1.0.0"
     const val logcatVersion = "0.1"
     const val combineTupleVersion = "1.1.1"
+    const val testManifestVersion = "1.2.0"
 }
