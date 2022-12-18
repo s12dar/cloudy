@@ -41,7 +41,7 @@ object Dependencies {
     const val composeUiTest = "androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}"
     const val composeConstraintLayout =
         "androidx.constraintlayout:constraintlayout-compose:${Versions.composeConstraintLayoutVersion}"
-    const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.daggerHiltVersion}"
+    const val hiltCompiler = "androidx.hilt:hilt-compiler:${Versions.hiltVersion}"
     const val hiltNavigationCompose =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     const val accompanistSwipeRefresh =
@@ -65,4 +65,5 @@ object Dependencies {
     const val squareLogcat = "com.squareup.logcat:logcat:${Versions.logcatVersion}"
     const val flowCombineTuple =
         "com.github.Zhuinden:flow-combinetuple-kt:${Versions.combineTupleVersion}"
+    const val testManifest = "androidx.compose.ui:ui-test-manifest:${Versions.testMonitorVersion}"
 }
