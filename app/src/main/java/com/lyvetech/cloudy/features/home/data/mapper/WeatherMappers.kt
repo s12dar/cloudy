@@ -1,7 +1,11 @@
 package com.lyvetech.cloudy.features.home.data.mapper
 
+import android.location.Address
+import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.lyvetech.cloudy.WeatherApplication
+import com.lyvetech.cloudy.core.domain.model.LocationModel
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherDataEntity
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherEntity
 import com.lyvetech.cloudy.features.home.data.remote.dto.WeatherDataDto
@@ -11,6 +15,7 @@ import com.lyvetech.cloudy.features.home.domain.model.WeatherInfo
 import com.lyvetech.cloudy.features.home.domain.model.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 private data class IndexedWeatherData(
     val index: Int,
@@ -49,8 +54,7 @@ private fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
 fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
-    // TODO: fix the context issue in manageLocation function to make it easier for unit testing, it's hardcoded rn!
-    val location = "Berlin, Germany"
+    val location = LocationModel(latitude, longitude)
     val currentWeatherData = weatherDataMap[0]?.find {
         val hour = if (now.minute < 30) now.hour else now.hour + 1
         it.time.hour == hour
@@ -64,18 +68,18 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     )
 }
 
-//private fun WeatherEntity.manageLocation(
-//    context: Context,
+//fun WeatherEntity.manageLocation(
 //    latitude: Double,
 //    longitude: Double
 //): String {
-//    val geocoder = Geocoder(context, Locale.getDefault())
-//    val addresses = geocoder.getFromLocation(latitude, longitude, 1) as List<Address>
-//    val cityName = addresses[0].getAddressLine(0)
-//        .split(",")
-//        .toTypedArray()
+//        val appContext = WeatherApplication.context
+//        val geocoder = Geocoder(appContext, Locale.getDefault())
+//        val addresses = geocoder.getFromLocation(latitude, longitude, 1) as List<Address>
+//        val cityName = addresses[0].getAddressLine(0)
+//            .split(",")
+//            .toTypedArray()
 //
-//    return cityName[1]
+//       return cityName[1]
 //}
 
 fun WeatherDto.toWeatherLocal(lastFetchTime: Long): WeatherEntity {
