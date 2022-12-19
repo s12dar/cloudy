@@ -17,14 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lyvetech.cloudy.R
-import com.lyvetech.cloudy.features.home.domain.model.WeatherData
 import com.lyvetech.cloudy.core.theme.CloudyTheme
 import com.lyvetech.cloudy.core.theme.typography
 
 @Composable
 fun WeatherDataDisplay(
     modifier: Modifier = Modifier,
-    weatherData: WeatherData
+    humidity: Double,
+    pressure: Double,
+    windSpeed: Double
 ) {
     Row(
         modifier = modifier,
@@ -34,17 +35,17 @@ fun WeatherDataDisplay(
         WeatherDataElement(
             icon = R.drawable.ic_humidity,
             text = R.string.weather_humidity,
-            value = "${weatherData.humidity}%"
+            value = "${humidity}%"
         )
         WeatherDataElement(
             icon = R.drawable.ic_pressure,
             text = R.string.weather_pressure,
-            value = "${weatherData.pressure}hPa"
+            value = "${pressure}hPa"
         )
         WeatherDataElement(
             icon = R.drawable.ic_speed,
             text = R.string.weather_wind_speed,
-            value = "${weatherData.windSpeed}km/h"
+            value = "${windSpeed}km/h"
         )
     }
 }
@@ -89,6 +90,19 @@ private fun WeatherDataElementPreview() {
             icon = R.drawable.ic_speed,
             text = R.string.weather_humidity,
             value = "33.0%"
+        )
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun WeatherDataDisplayPreview() {
+    CloudyTheme {
+        WeatherDataDisplay(
+            modifier = Modifier,
+            humidity = 12.0,
+            pressure = 12.0,
+            windSpeed = 12.0
         )
     }
 }
