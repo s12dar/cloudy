@@ -79,6 +79,9 @@ internal fun HomeScreen(
                             convertCelsiusToFahrenheit(it.temperatureCelsius)
                         }${Constants.FAHRENHEIT_SIGN}" else "${it.temperatureCelsius}${Constants.CELSIUS_SIGN}",
                         weatherType = it.weatherType.weatherDesc,
+                        humidity = it.humidity,
+                        windSpeed = it.windSpeed,
+                        pressure = it.pressure,
                         img = it.weatherType.iconRes
                     )
                 }
@@ -111,6 +114,9 @@ private fun HomeContent(
     location: String,
     temperature: String,
     weatherType: String,
+    humidity: Double,
+    pressure: Double,
+    windSpeed: Double,
     @DrawableRes img: Int
 ) {
     Box(
@@ -134,9 +140,9 @@ private fun HomeContent(
 
             WeatherDataDisplay(
                 modifier = Modifier.paddingFromBaseline(top = 56.dp),
-                humidity = 12.0,
-                pressure = 12.0,
-                windSpeed = 12.0
+                humidity = humidity,
+                pressure = pressure,
+                windSpeed = windSpeed
             )
         }
 
@@ -163,6 +169,9 @@ private fun HomeScreenPreview() {
             temperature = "12°C",
             weatherType = "Clear Sky",
             img = R.drawable.ic_clear_sky,
+            humidity = 12.0,
+            windSpeed = 12.0,
+            pressure = 12.0
         )
     }
 }
