@@ -29,7 +29,7 @@ object Dependencies {
     const val composeUi = "androidx.compose.ui:ui:${Versions.composeVersion}"
     const val composeToolingPreview =
         "androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}"
-    const val composeTooling = "androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}"
+    const val composeTooling = "androidx.compose.ui:ui-tooling:${Versions.composeVersion}"
     const val composeActivity =
         "androidx.activity:activity-compose:${Versions.composeActivityVersion}"
     const val composeViewModel =

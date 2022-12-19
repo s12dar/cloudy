@@ -20,6 +20,7 @@ import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.features.home.ui.HomeScreen
 import com.lyvetech.cloudy.features.settings.ui.SettingsScreen
 import com.lyvetech.cloudy.core.component.WeatherTopAppBar
+import com.lyvetech.cloudy.features.home.ui.HomeRoute
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -57,7 +58,7 @@ fun MainContent() {
         }
     ) {
         when (selectedTab) {
-            CloudyTabs.Home -> HomeScreen(modifier = Modifier.padding(it))
+            CloudyTabs.Home -> HomeRoute(modifier = Modifier.padding(it))
             CloudyTabs.Settings -> SettingsScreen(
                 modifier = Modifier.padding(it)
             )
