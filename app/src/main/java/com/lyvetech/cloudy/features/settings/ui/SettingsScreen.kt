@@ -2,25 +2,41 @@ package com.lyvetech.cloudy.features.settings.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.BugReport
+import androidx.compose.material.icons.filled.Cloud
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.components.LabelledRadioButton
+import com.lyvetech.cloudy.core.theme.typography
 import com.lyvetech.cloudy.features.settings.data.datastore.TempUnitSelection
 import com.lyvetech.cloudy.features.settings.data.datastore.ThemeSelection
-import com.lyvetech.cloudy.core.theme.typography
 
 @Composable
 fun SettingsScreen(
@@ -195,6 +211,7 @@ private fun SingleChoiceDialog(
     val selectedOptionIndex = rememberSaveable { mutableStateOf(initialSelectedOptionIndex) }
 
     AlertDialog(
+        modifier = Modifier.clip(RoundedCornerShape(24.dp)),
         onDismissRequest = onDismissRequest,
         title = { Text(title) },
         text = {
@@ -208,7 +225,6 @@ private fun SingleChoiceDialog(
                 }
             }
         },
-        modifier = modifier,
         confirmButton = {
             TextButton(onClick = { onConfirmed(selectedOptionIndex.value) }) {
                 Text(stringResource(id = R.string.ok))
