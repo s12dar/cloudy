@@ -127,9 +127,17 @@ fun SettingsScreen(
             SettingsItem(
                 title = R.string.report_issue,
                 value = R.string.help_us,
-                icon = Icons.Filled.BugReport,
-                onClick = { }
-            )
+                icon = Icons.Filled.BugReport
+            ) {
+                context.startActivity(
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_SENDTO).apply {
+                            data = Uri.parse("mailto:$CLOUDY_EMAIL")
+                        },
+                        null
+                    )
+                )
+            }
             SettingsItem(
                 title = R.string.rate_us,
                 value = R.string.give_feedbacks,
