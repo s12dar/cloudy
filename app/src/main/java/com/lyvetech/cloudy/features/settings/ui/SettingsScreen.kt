@@ -124,6 +124,7 @@ fun SettingsScreen(
                     )
                 )
             }
+
             SettingsItem(
                 title = R.string.report_issue,
                 value = R.string.help_us,
@@ -138,12 +139,20 @@ fun SettingsScreen(
                     )
                 )
             }
+
             SettingsItem(
                 title = R.string.rate_us,
                 value = R.string.give_feedbacks,
-                icon = Icons.Filled.Star,
-                onClick = { }
-            )
+                icon = Icons.Filled.Star
+            ) {
+                context.startActivity(
+                    Intent.createChooser(
+                        Intent(Intent.ACTION_VIEW, Uri.parse(APP_URL)),
+                        null
+                    )
+                )
+            }
+
             SettingsItem(
                 title = R.string.version,
                 value = R.string.app_version,
@@ -152,7 +161,6 @@ fun SettingsScreen(
             )
         }
     }
-
 }
 
 @ComposeCompilerApi
