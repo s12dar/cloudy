@@ -21,7 +21,7 @@ class HomeRemoteDataSourceImpl @Inject constructor(
             return@withContext try {
                 Resource.Success(
                     data = apiService.getWeatherData(
-                        lat = location.longitude, long = location.latitude
+                        lat = location.latitude, long = location.longitude
                     ).body()
                 )
             } catch (e: Exception) {
