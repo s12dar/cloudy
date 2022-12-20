@@ -1,5 +1,8 @@
 package com.lyvetech.cloudy.features.settings.ui
 
+import android.content.Intent
+import android.content.res.Configuration
+import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -29,12 +32,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.components.LabelledRadioButton
+import com.lyvetech.cloudy.core.theme.CloudyTheme
 import com.lyvetech.cloudy.core.theme.typography
+import com.lyvetech.cloudy.core.util.Constants.APP_URL
+import com.lyvetech.cloudy.core.util.Constants.CLOUDY_EMAIL
 import com.lyvetech.cloudy.features.settings.data.datastore.TempUnitSelection
 import com.lyvetech.cloudy.features.settings.data.datastore.ThemeSelection
 
@@ -45,6 +53,7 @@ fun SettingsScreen(
 ) {
     val uiState = viewModel.uiState.observeAsState(SettingsScreenState.initialState)
     val actions: SettingsScreenActions = viewModel
+    val context = LocalContext.current
     val selectedTheme = uiState.value.appPreferences.selectedTheme
     val selectedTempUnit = uiState.value.appPreferences.selectedTempUnit
 
@@ -99,9 +108,22 @@ fun SettingsScreen(
             SettingsItem(
                 title = R.string.share_application,
                 value = R.string.invite_friends,
-                icon = Icons.Filled.Share,
-                onClick = { }
-            )
+                icon = Icons.Filled.Share
+            ) {
+                context.startActivity(
+                    Intent.createChooser(
+                        Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(
+                                Intent.EXTRA_TEXT,
+                                "Heyy there! Check the Cloudy out on Google Play; $APP_URL"
+                            )
+                            type = "text/plain"
+                        },
+                        null
+                    )
+                )
+            }
             SettingsItem(
                 title = R.string.report_issue,
                 value = R.string.help_us,
@@ -231,4 +253,17 @@ private fun SingleChoiceDialog(
             }
         }
     )
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun SettingsItemPreview() {
+    CloudyTheme {
+        SettingsItem(
+            title = R.string.theme,
+            value = R.string.system_default,
+            icon = Icons.Filled.DarkMode,
+            onClick = {}
+        )
+    }
 }
