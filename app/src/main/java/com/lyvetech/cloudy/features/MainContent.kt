@@ -17,10 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.lyvetech.cloudy.R
-import com.lyvetech.cloudy.features.home.ui.HomeScreen
-import com.lyvetech.cloudy.features.settings.ui.SettingsScreen
 import com.lyvetech.cloudy.core.component.WeatherTopAppBar
 import com.lyvetech.cloudy.features.home.ui.HomeRoute
+import com.lyvetech.cloudy.features.settings.ui.SettingsRoute
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -59,9 +58,7 @@ fun MainContent() {
     ) {
         when (selectedTab) {
             CloudyTabs.Home -> HomeRoute(modifier = Modifier.padding(it))
-            CloudyTabs.Settings -> SettingsScreen(
-                modifier = Modifier.padding(it)
-            )
+            CloudyTabs.Settings -> SettingsRoute(modifier = Modifier.padding(it))
         }
     }
 }
