@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeCompilerApi
+import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,12 +48,25 @@ import com.lyvetech.cloudy.features.settings.data.datastore.TempUnitSelection
 import com.lyvetech.cloudy.features.settings.data.datastore.ThemeSelection
 
 @Composable
-fun SettingsScreen(
-    modifier: Modifier = Modifier,
+internal fun SettingsRoute(
+    modifier: Modifier,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val uiState = viewModel.uiState.observeAsState(SettingsScreenState.initialState)
-    val actions: SettingsScreenActions = viewModel
+    val settingsUiState = viewModel.getUiState().observeAsState(SettingsScreenState.initialState)
+
+    SettingsScreen(
+        modifier = modifier,
+        uiState = settingsUiState,
+        actions = viewModel
+    )
+}
+
+@Composable
+internal fun SettingsScreen(
+    modifier: Modifier = Modifier,
+    uiState: State<SettingsScreenState>,
+    actions: SettingsScreenActions
+) {
     val context = LocalContext.current
     val selectedTheme = uiState.value.appPreferences.selectedTheme
     val selectedTempUnit = uiState.value.appPreferences.selectedTempUnit
@@ -242,7 +256,6 @@ private fun SingleChoiceDialog(
     title: String,
     options: List<String>,
     initialSelectedOptionIndex: Int,
-    modifier: Modifier = Modifier,
     onConfirmed: (index: Int) -> Unit,
     onDismissRequest: () -> Unit
 ) {
