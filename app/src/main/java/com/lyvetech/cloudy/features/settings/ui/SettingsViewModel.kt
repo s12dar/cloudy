@@ -22,7 +22,9 @@ class SettingsViewModel @Inject constructor(
     private val showTempUnitDialog =
         savedStateHandle.getLiveData("showTempUnitDialog", false)
 
-    var uiState = combineTuple(
+    fun getUiState(): LiveData<SettingsScreenState> = uiState
+
+    private var uiState = combineTuple(
         appPreferences,
         showThemeDialog.asFlow(),
         showTempUnitDialog.asFlow()
