@@ -1,4 +1,4 @@
-package com.lyvetech.cloudy.features.home.navigation
+package com.lyvetech.cloudy.core.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable

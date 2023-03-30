@@ -1,4 +1,4 @@
-package com.lyvetech.cloudy.features.home.navigation
+package com.lyvetech.cloudy.core.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
