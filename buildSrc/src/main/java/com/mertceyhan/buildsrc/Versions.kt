@@ -1,8 +1,8 @@
 @file:Suppress("PackageDirectoryMismatch")
 
 object Versions {
-    const val gradleVersion = "8.0.0-alpha08"
-    const val kotlinVersion = "1.7.0"
+    const val gradleVersion = "8.1.0-alpha08"
+    const val kotlinVersion = "1.8.0"
     const val daggerHiltVersion = "2.44.2"
     const val hiltVersion = "1.0.0"
     const val kotlinCompilerExtensionVersion = "1.2.0"
@@ -18,7 +18,8 @@ object Versions {
     const val androidArchCoreTest = "2.1.0"
     const val testMonitorVersion = "1.2.0"
     const val testRunnerVersion = "1.5.1"
-    const val composeVersion = "1.2.0"
+    const val composeVersion = "1.4.0"
+    const val composeMaterial3Version = "1.1.0-alpha05"
     const val composeActivityVersion = "1.6.1"
     const val livedataKtxVersion = "2.5.1"
     const val composeViewModelVersion = "2.5.1"
