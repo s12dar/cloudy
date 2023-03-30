@@ -6,7 +6,7 @@
 
     <!-- bottom nav -->
     <string name="bottom_nav_home">Home</string>
-    <string name="bottom_nav_settings">Settings</string>
+    <string name="bottom_nav_forecast">Forecast</string>
 
     <!-- settings screen -->
     <string name="theme">Theme</string>
@@ -30,5 +30,6 @@
     <string name="app_version">Current app version</string>
     <string name="close">Close</string>
     <string name="ok">OK</string>
+    <string name="settings">Settings</string>
 
 </resources>

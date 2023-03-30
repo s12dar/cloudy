@@ -21,8 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lyvetech.cloudy.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.components.HomeBody
 import com.lyvetech.cloudy.components.WeatherDataDisplay
 import com.lyvetech.cloudy.core.theme.CloudyTheme

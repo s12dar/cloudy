@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +16,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lyvetech.cloudy.R
-import com.lyvetech.cloudy.core.theme.typography
 
 @Composable
 fun HomeBody(
@@ -32,11 +32,11 @@ fun HomeBody(
     ) {
         Text(
             text = location,
-            style = typography.h1
+            style = MaterialTheme.typography.headlineLarge
         )
         Text(
             text = lastFetchTime,
-            style = typography.h3,
+            style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
@@ -50,11 +50,11 @@ fun HomeBody(
 
         Text(
             text = temperature,
-            style = typography.h1
+            style = MaterialTheme.typography.bodyLarge
         )
         Text(
             text = weatherType,
-            style = typography.h3,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
