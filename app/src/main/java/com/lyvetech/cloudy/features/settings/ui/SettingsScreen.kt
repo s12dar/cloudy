@@ -13,10 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.Cloud
@@ -24,6 +20,10 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.runtime.State
@@ -41,7 +41,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.components.LabelledRadioButton
 import com.lyvetech.cloudy.core.theme.CloudyTheme
-import com.lyvetech.cloudy.core.theme.typography
 import com.lyvetech.cloudy.core.util.Constants.APP_URL
 import com.lyvetech.cloudy.core.util.Constants.CLOUDY_EMAIL
 import com.lyvetech.cloudy.features.settings.data.datastore.TempUnitSelection
@@ -49,7 +48,7 @@ import com.lyvetech.cloudy.features.settings.data.datastore.ThemeSelection
 
 @Composable
 internal fun SettingsRoute(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val settingsUiState = viewModel.getUiState().observeAsState(SettingsScreenState.initialState)
@@ -187,7 +186,7 @@ fun GeneralSettingsSection(
     Column(modifier = modifier) {
         Text(
             text = stringResource(id = title),
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
                 .padding(horizontal = 16.dp),
@@ -205,7 +204,7 @@ fun OtherSettingsSection(
     Column(modifier = modifier) {
         Text(
             stringResource(id = title),
-            style = MaterialTheme.typography.h2,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .paddingFromBaseline(top = 16.dp, bottom = 16.dp)
                 .padding(horizontal = 16.dp),
@@ -239,12 +238,12 @@ fun SettingsItem(
         ) {
             Text(
                 text = stringResource(id = title),
-                style = typography.h3,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = modifier
             )
             Text(
                 text = stringResource(id = value),
-                style = typography.body1,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
