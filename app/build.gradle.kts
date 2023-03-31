@@ -62,7 +62,6 @@ kapt {
 
 dependencies {
     implementation(project(":core-ui"))
-    implementation(project(":core-navigation"))
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.composeUi)

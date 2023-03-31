@@ -3,34 +3,36 @@ package com.lyvetech.cloudy.features
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lyvetech.cloudy.R
-import com.lyvetech.cloudy.core.ui.FeedbackIconButton
 import com.lyvetech.cloudy.core.navigation.CloudyNavGraph
 import com.lyvetech.cloudy.core.navigation.NavDestinations
+import com.lyvetech.cloudy.core.ui.FeedbackIconButton
 
 @RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainContent() {
     val navController = rememberAnimatedNavController()
@@ -74,8 +76,8 @@ private fun CloudyBottomBar(
 
     NavigationBar(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
             .navigationBarsPadding(),
+        containerColor = Color.Transparent,
     ) {
         screens.forEachIndexed { index, screen ->
             NavigationBarItem(

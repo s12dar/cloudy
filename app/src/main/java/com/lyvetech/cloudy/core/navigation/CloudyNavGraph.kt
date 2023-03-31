@@ -34,7 +34,7 @@ fun NavGraphBuilder.homeScreen(
     composable(
         route = NavDestinations.Screen.Home.route
     ) {
-        HomeRoute()
+        HomeRoute(modifier = modifier)
     }
 }
 
