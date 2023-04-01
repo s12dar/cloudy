@@ -14,7 +14,7 @@ sealed class WeatherType(
 
     object MainlyClear : WeatherType(
         weatherDesc = "Mainly Clear",
-        iconRes = R.drawable.ic_mainly_clear
+        iconRes = R.drawable.ic_clear_sky
     )
 
     object PartlyCloudy : WeatherType(
@@ -29,12 +29,12 @@ sealed class WeatherType(
 
     object Foggy : WeatherType(
         weatherDesc = "Foggy",
-        iconRes = R.drawable.ic_very_cloudy
+        iconRes = R.drawable.ic_cloudy
     )
 
     object DepositingRimeFog : WeatherType(
         weatherDesc = "Depositing rime fog",
-        iconRes = R.drawable.ic_very_cloudy
+        iconRes = R.drawable.ic_cloudy
     )
 
     object LightDrizzle : WeatherType(
