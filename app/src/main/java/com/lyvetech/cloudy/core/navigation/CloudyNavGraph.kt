@@ -45,6 +45,6 @@ fun NavGraphBuilder.settingsScreen(
     composable(
         route = NavDestinations.Screen.Settings.route
     ) {
-        SettingsRoute()
+        SettingsRoute(modifier = modifier)
     }
 }
