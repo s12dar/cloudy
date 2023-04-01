@@ -40,7 +40,7 @@ fun MainContent() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { CloudyBottomBar(navController) },
-        topBar = { CloudyTopAppBar() }
+        topBar = { CloudyTopAppBar(navController) }
     ) {
         Column(Modifier.fillMaxSize()) {
             CloudyNavGraph(
@@ -53,7 +53,9 @@ fun MainContent() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CloudyTopAppBar() {
+private fun CloudyTopAppBar(
+    navController: NavHostController
+) {
     CenterAlignedTopAppBar(
         title = {},
         scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
@@ -62,7 +64,9 @@ private fun CloudyTopAppBar() {
                 imageVector = Icons.Outlined.Settings,
                 contentDescription = stringResource(R.string.settings),
                 tint = MaterialTheme.colorScheme.onSurface,
-            )
+            ) {
+                navController.navigate(NavDestinations.Screen.Settings.route)
+            }
         }
     )
 }
