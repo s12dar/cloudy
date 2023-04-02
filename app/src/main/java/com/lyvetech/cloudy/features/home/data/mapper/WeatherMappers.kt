@@ -1,10 +1,7 @@
 package com.lyvetech.cloudy.features.home.data.mapper
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.lyvetech.cloudy.WeatherApplication
 import com.lyvetech.cloudy.core.domain.model.LocationModel
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherDataEntity
 import com.lyvetech.cloudy.features.home.data.local.entity.WeatherEntity
@@ -15,7 +12,6 @@ import com.lyvetech.cloudy.features.home.domain.model.WeatherInfo
 import com.lyvetech.cloudy.features.home.domain.model.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 private data class IndexedWeatherData(
     val index: Int,
