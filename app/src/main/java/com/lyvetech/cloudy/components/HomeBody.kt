@@ -3,7 +3,6 @@ package com.lyvetech.cloudy.components
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.paddingFromBaseline
@@ -38,7 +37,7 @@ fun HomeBody(
         )
         Text(
             text = lastFetchTime,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
@@ -46,7 +45,7 @@ fun HomeBody(
 
         Image(
             modifier = modifier
-                .size(104.dp),
+                .size(120.dp),
             painter = painterResource(id = img),
             contentDescription = null,
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)

@@ -28,6 +28,7 @@ import com.lyvetech.cloudy.core.theme.CloudyTheme
 import com.lyvetech.cloudy.core.ui.UiState
 import com.lyvetech.cloudy.core.util.Constants
 import com.lyvetech.cloudy.features.home.data.util.manageLocation
+import com.lyvetech.cloudy.features.home.data.util.toDateFormat
 import com.lyvetech.cloudy.features.settings.data.util.convertCelsiusToFahrenheit
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -74,6 +75,7 @@ internal fun HomeScreen(
                         scrollState = scrollState,
                         isFeedLoading = isFeedLoading,
                         location = manageLocation(weatherInfo.location),
+                        lastFetchedTime = weatherInfo.lastFetchedTime.toDateFormat(),
                         temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
                             convertCelsiusToFahrenheit(it.temperatureCelsius)
                         }${Constants.FAHRENHEIT_SIGN}" else "${it.temperatureCelsius}${Constants.CELSIUS_SIGN}",
@@ -106,6 +108,7 @@ private fun HomeContent(
     scrollState: ScrollState,
     isFeedLoading: Boolean,
     location: String,
+    lastFetchedTime: String,
     temperature: String,
     weatherType: String,
     humidity: Double,
@@ -125,12 +128,12 @@ private fun HomeContent(
                     .fillMaxWidth()
                     .padding(top = 8.dp, start = 8.dp, end = 8.dp),
                 location = location,
-                lastFetchTime = "",
+                lastFetchTime = lastFetchedTime,
                 img = img,
                 temperature = temperature,
                 weatherType = weatherType
             )
-            Spacer(modifier = Modifier.height(56.dp))
+            Spacer(modifier = Modifier.height(96.dp))
 
             WeatherDataDisplay(
                 modifier = Modifier.paddingFromBaseline(top = 56.dp),
@@ -163,6 +166,7 @@ private fun HomeScreenPreview() {
             temperature = "12°C",
             weatherType = "Clear Sky",
             img = R.drawable.ic_clear_sky,
+            lastFetchedTime = "",
             humidity = 12.0,
             windSpeed = 12.0,
             pressure = 12.0
