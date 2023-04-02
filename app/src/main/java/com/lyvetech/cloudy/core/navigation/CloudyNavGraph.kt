@@ -8,6 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.lyvetech.cloudy.features.forecast.ui.ForecastRoute
 import com.lyvetech.cloudy.features.home.ui.HomeRoute
 import com.lyvetech.cloudy.features.settings.ui.SettingsRoute
 
@@ -22,6 +23,7 @@ fun CloudyNavGraph(
         builder = {
             homeScreen(navController, modifier = modifier)
             settingsScreen(navController, modifier = modifier)
+            forecastScreen(navController, modifier = modifier)
         }
     )
 }
@@ -47,4 +49,16 @@ fun NavGraphBuilder.settingsScreen(
     ) {
         SettingsRoute(modifier = modifier)
     }
+}
+
+fun NavGraphBuilder.forecastScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
+    composable(
+        route = NavDestinations.Screen.Forecast.route
+    ) {
+        ForecastRoute(modifier = modifier)
+    }
+
 }

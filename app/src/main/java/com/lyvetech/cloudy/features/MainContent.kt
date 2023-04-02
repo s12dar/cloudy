@@ -42,7 +42,7 @@ fun MainContent() {
         bottomBar = { CloudyBottomBar(navController) },
         topBar = { CloudyTopAppBar(navController) }
     ) {
-        Column(Modifier.fillMaxSize()) {
+        Column {
             CloudyNavGraph(
                 navController = navController,
                 modifier = Modifier.padding(it)
@@ -75,7 +75,7 @@ private fun CloudyTopAppBar(
 private fun CloudyBottomBar(
     navController: NavHostController
 ) {
-    val screens = listOf(NavDestinations.Screen.Home, NavDestinations.Screen.Settings)
+    val screens = listOf(NavDestinations.Screen.Home, NavDestinations.Screen.Forecast)
     val selectedTab = remember { mutableStateOf(0) }
 
     NavigationBar(
