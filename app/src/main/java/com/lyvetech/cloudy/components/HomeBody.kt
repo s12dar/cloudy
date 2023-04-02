@@ -54,11 +54,11 @@ fun HomeBody(
 
         Text(
             text = temperature,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.titleLarge
         )
         Text(
             text = weatherType,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.paddingFromBaseline(
                 top = 24.dp, bottom = 8.dp
             )
