@@ -1,16 +1,17 @@
 package com.lyvetech.cloudy.features.home.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.lyvetech.cloudy.core.ui.UiState
-import com.lyvetech.cloudy.core.util.Resource
-import com.lyvetech.cloudy.features.home.data.repository.HomeRepositoryImpl
-import com.lyvetech.cloudy.features.home.domain.service.LocationTracker
-import com.lyvetech.cloudy.features.settings.data.datastore.PreferencesManager
+import com.lyvetech.cloudy.common.ui.UiState
+import com.lyvetech.cloudy.domain.util.Resource
+import com.lyvetech.cloudy.data.repository.HomeRepositoryImpl
+import com.lyvetech.cloudy.domain.service.LocationTracker
+import com.lyvetech.cloudy.domain.pref.PreferencesManager
 import com.lyvetech.cloudy.utils.dummyLocation
 import com.lyvetech.cloudy.utils.fakeAppPreferences
 import com.lyvetech.cloudy.utils.fakeNotExpiredWeatherInfo
 import com.lyvetech.cloudy.utils.`should be`
 import com.google.common.truth.Truth.assertThat
+import com.lyvetech.cloudy.presentation.home.HomeViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
