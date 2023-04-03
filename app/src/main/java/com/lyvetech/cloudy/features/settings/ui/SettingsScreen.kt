@@ -14,12 +14,12 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BugReport
-import androidx.compose.material.icons.filled.Cloud
-import androidx.compose.material.icons.filled.Code
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.Cloud
+import androidx.compose.material.icons.outlined.Code
+import androidx.compose.material.icons.outlined.ColorLens
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -104,13 +104,13 @@ internal fun SettingsScreen(
             SettingsItem(
                 title = R.string.theme,
                 value = selectedTheme.readableName,
-                icon = Icons.Filled.DarkMode,
+                icon = Icons.Outlined.ColorLens,
                 onClick = { actions.onThemePreferenceClicked() }
             )
             SettingsItem(
                 title = R.string.temperature_unit,
                 value = selectedTempUnit.readableName,
-                icon = Icons.Filled.Cloud,
+                icon = Icons.Outlined.Cloud,
                 onClick = { actions.onTempUnitPreferenceClicked() }
             )
         }
@@ -121,7 +121,7 @@ internal fun SettingsScreen(
             SettingsItem(
                 title = R.string.share_application,
                 value = R.string.invite_friends,
-                icon = Icons.Filled.Share
+                icon = Icons.Outlined.Share
             ) {
                 context.startActivity(
                     Intent.createChooser(
@@ -141,7 +141,7 @@ internal fun SettingsScreen(
             SettingsItem(
                 title = R.string.report_issue,
                 value = R.string.help_us,
-                icon = Icons.Filled.BugReport
+                icon = Icons.Outlined.BugReport
             ) {
                 context.startActivity(
                     Intent.createChooser(
@@ -156,7 +156,7 @@ internal fun SettingsScreen(
             SettingsItem(
                 title = R.string.rate_us,
                 value = R.string.give_feedbacks,
-                icon = Icons.Filled.Star
+                icon = Icons.Outlined.StarOutline
             ) {
                 context.startActivity(
                     Intent.createChooser(
@@ -169,7 +169,7 @@ internal fun SettingsScreen(
             SettingsItem(
                 title = R.string.version,
                 value = R.string.app_version,
-                icon = Icons.Filled.Code,
+                icon = Icons.Outlined.Code,
                 onClick = { }
             )
         }
@@ -229,7 +229,8 @@ fun SettingsItem(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            tint = MaterialTheme.colorScheme.primary
         )
         Column(
             modifier = Modifier.padding(
@@ -290,7 +291,7 @@ private fun SettingsItemPreview() {
         SettingsItem(
             title = R.string.theme,
             value = R.string.system_default,
-            icon = Icons.Filled.DarkMode,
+            icon = Icons.Outlined.ColorLens,
             onClick = {}
         )
     }
