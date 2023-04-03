@@ -1,9 +1,10 @@
 package com.lyvetech.cloudy.features.home.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.lyvetech.cloudy.core.util.Resource
-import com.lyvetech.cloudy.features.home.data.local.HomeLocalDataSource
-import com.lyvetech.cloudy.features.home.data.remote.HomeRemoteDataSource
+import com.lyvetech.cloudy.domain.util.Resource
+import com.lyvetech.cloudy.data.local.HomeLocalDataSource
+import com.lyvetech.cloudy.data.remote.HomeRemoteDataSource
+import com.lyvetech.cloudy.data.repository.HomeRepositoryImpl
 import com.lyvetech.cloudy.utils.*
 import io.mockk.*
 import io.mockk.impl.annotations.MockK

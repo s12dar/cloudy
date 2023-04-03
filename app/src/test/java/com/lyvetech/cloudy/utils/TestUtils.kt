@@ -1,15 +1,15 @@
 package com.lyvetech.cloudy.utils
 
-import com.lyvetech.cloudy.core.domain.model.LocationModel
-import com.lyvetech.cloudy.features.home.data.local.entity.WeatherDataEntity
-import com.lyvetech.cloudy.features.home.data.local.entity.WeatherEntity
-import com.lyvetech.cloudy.features.home.data.mapper.toWeatherInfo
-import com.lyvetech.cloudy.features.home.data.mapper.toWeatherLocal
-import com.lyvetech.cloudy.features.home.data.remote.dto.WeatherDataDto
-import com.lyvetech.cloudy.features.home.data.remote.dto.WeatherDto
-import com.lyvetech.cloudy.features.settings.data.datastore.AppPreferences
-import com.lyvetech.cloudy.features.settings.data.datastore.TempUnitSelection
-import com.lyvetech.cloudy.features.settings.data.datastore.ThemeSelection
+import com.lyvetech.cloudy.common.model.LocationModel
+import com.lyvetech.cloudy.data.local.entity.WeatherDataEntity
+import com.lyvetech.cloudy.data.local.entity.WeatherEntity
+import com.lyvetech.cloudy.data.mapper.toWeatherInfo
+import com.lyvetech.cloudy.data.mapper.toWeatherLocal
+import com.lyvetech.cloudy.data.remote.dto.WeatherDataDto
+import com.lyvetech.cloudy.data.remote.dto.WeatherDto
+import com.lyvetech.cloudy.data.pref.AppPreferences
+import com.lyvetech.cloudy.data.pref.TempUnitSelection
+import com.lyvetech.cloudy.data.pref.ThemeSelection
 import kotlinx.coroutines.flow.flow
 
 val fakeWeatherDataDto = WeatherDataDto(
