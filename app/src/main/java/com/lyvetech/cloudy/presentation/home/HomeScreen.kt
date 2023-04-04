@@ -13,7 +13,6 @@ import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.common.Constants
-import com.lyvetech.cloudy.common.ui.UiState
 import com.lyvetech.cloudy.common.ui.theme.CloudyTheme
 import com.lyvetech.cloudy.common.utils.toDateFormat
 import com.lyvetech.cloudy.common.utils.toFahrenheit
@@ -37,12 +35,12 @@ internal fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val homeUiState by viewModel.getUiState()
+    val homeUiState by viewModel.uiState.collectAsState()
 
     HomeScreen(
         modifier = modifier,
         uiState = homeUiState,
-        getWeatherInfo = viewModel::getWeatherInfo
+        refreshWeather = viewModel::refreshWeather
     )
 }
 
@@ -51,52 +49,35 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier,
-    uiState: UiState<HomeScreenState>,
-    getWeatherInfo: () -> Unit
+    uiState: HomeScreenState,
+    refreshWeather: () -> Unit
 ) {
-    val isFeedLoading = uiState is UiState.Loading
+    val isFeedLoading = uiState.isLoading
     val pullRefreshState =
-        rememberPullRefreshState(refreshing = isFeedLoading, { getWeatherInfo() })
-
+        rememberPullRefreshState(refreshing = isFeedLoading, { refreshWeather() })
     val scrollState = rememberScrollState()
 
-    when (uiState) {
-        is UiState.Success -> {
-            val viewState = uiState.data
-            val selectedTempUnit = viewState.appPreferences.collectAsState(
-                HomeScreenState.appPreferencesInitialState
-            ).value.selectedTempUnit
+    val selectedTempUnit = uiState.appPreferences.selectedTempUnit
 
-            viewState.weatherInfo?.let { weatherInfo ->
-                weatherInfo.currentWeatherData?.let {
-                    HomeContent(
-                        modifier = modifier,
-                        pullRefreshState = pullRefreshState,
-                        scrollState = scrollState,
-                        isFeedLoading = isFeedLoading,
-                        location = weatherInfo.location.toReadableLocation(),
-                        lastFetchedTime = weatherInfo.lastFetchedTime.toDateFormat(),
-                        temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
-                            (it.temperatureCelsius.toFahrenheit())
-                        }${Constants.FAHRENHEIT_SIGN}" else "${it.temperatureCelsius}${Constants.CELSIUS_SIGN}",
-                        weatherType = it.weatherType.weatherDesc,
-                        humidity = it.humidity,
-                        windSpeed = it.windSpeed,
-                        pressure = it.pressure,
-                        img = it.weatherType.iconRes
-                    )
-                }
-            }
+    uiState.weatherInfo?.let { it1 ->
+        it1.currentWeatherData?.let { it2 ->
+            HomeContent(
+                modifier = modifier,
+                pullRefreshState = pullRefreshState,
+                scrollState = scrollState,
+                isFeedLoading = isFeedLoading,
+                location = it1.location.toReadableLocation(),
+                lastFetchedTime = it1.lastFetchedTime.toDateFormat(),
+                temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
+                    (it2.temperatureCelsius.toFahrenheit())
+                }${Constants.FAHRENHEIT_SIGN}" else "${it2.temperatureCelsius}${Constants.CELSIUS_SIGN}",
+                weatherType = it2.weatherType.weatherDesc,
+                humidity = it2.humidity,
+                windSpeed = it2.windSpeed,
+                pressure = it2.pressure,
+                img = it2.weatherType.iconRes
+            )
         }
-
-        is UiState.Error -> {}
-
-        is UiState.Loading -> {}
-
-    }
-
-    LaunchedEffect(Unit) {
-        getWeatherInfo()
     }
 }
 

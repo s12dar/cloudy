@@ -1,14 +1,15 @@
 package com.lyvetech.cloudy.presentation.home
 
-import com.lyvetech.cloudy.domain.model.WeatherInfo
+import com.lyvetech.cloudy.common.model.LocationModel
 import com.lyvetech.cloudy.data.pref.AppPreferences
 import com.lyvetech.cloudy.data.pref.TempUnitSelection
 import com.lyvetech.cloudy.data.pref.ThemeSelection
-import kotlinx.coroutines.flow.Flow
+import com.lyvetech.cloudy.domain.model.WeatherInfo
 
-class HomeScreenState(
-    val weatherInfo: WeatherInfo?,
-    val appPreferences: Flow<AppPreferences>
+data class HomeScreenState(
+    val weatherInfo: WeatherInfo? = null,
+    val appPreferences: AppPreferences = appPreferencesInitialState,
+    val isLoading: Boolean = false
 ) {
     companion object {
         val appPreferencesInitialState = AppPreferences(
