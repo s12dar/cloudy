@@ -2,11 +2,11 @@ package com.lyvetech.cloudy.data.remote
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.lyvetech.cloudy.di.IoDispatcher
 import com.lyvetech.cloudy.common.model.LocationModel
-import com.lyvetech.cloudy.domain.util.Resource
 import com.lyvetech.cloudy.data.remote.dto.WeatherDto
 import com.lyvetech.cloudy.data.remote.retrofit.WeatherApiService
+import com.lyvetech.cloudy.di.IoDispatcher
+import com.lyvetech.cloudy.domain.util.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
