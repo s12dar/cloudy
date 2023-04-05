@@ -8,7 +8,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.lyvetech.cloudy.presentation.forecast.ui.ForecastRoute
+import com.lyvetech.cloudy.presentation.forecast.ForecastRoute
 import com.lyvetech.cloudy.presentation.home.HomeRoute
 import com.lyvetech.cloudy.presentation.settings.SettingsRoute
 

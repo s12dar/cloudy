@@ -1,4 +1,4 @@
-package com.lyvetech.cloudy.presentation.forecast.ui
+package com.lyvetech.cloudy.presentation.forecast
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,17 +25,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.lyvetech.cloudy.common.utils.displayText
+import com.lyvetech.cloudy.presentation.forecast.components.ForecastItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @SuppressLint("NewApi")
 @Composable
-fun ForecastRoute(modifier: Modifier = Modifier) {
+fun ForecastRoute(
+    modifier: Modifier = Modifier,
+    viewModel: ForecastViewModel = hiltViewModel(),
+) {
 
+    val uiState = viewModel.uiState.collectAsState()
     val currentDate = remember { LocalDate.now() }
     val startDate = remember { currentDate }
     val endDate = remember { currentDate.plusDays(7) }
@@ -49,7 +56,8 @@ fun ForecastRoute(modifier: Modifier = Modifier) {
     ForecastScreen(
         modifier = modifier,
         weatherState = weatherState,
-        selection = selection
+        selection = selection,
+        name = uiState.value.weatherInfo?.currentWeatherData?.weatherType?.weatherDesc.toString()
     )
 }
 
@@ -57,7 +65,8 @@ fun ForecastRoute(modifier: Modifier = Modifier) {
 internal fun ForecastScreen(
     modifier: Modifier = Modifier,
     weatherState: WeekCalendarState,
-    selection: MutableState<LocalDate>
+    selection: MutableState<LocalDate>,
+    name: String
 ) {
     Log.d("DEBUG CLOUDY", selection.value.toString())
     Column(
@@ -74,6 +83,8 @@ internal fun ForecastScreen(
                 }
             },
         )
+
+        ForecastItem(modifier = modifier, name = name)
     }
 }
 
