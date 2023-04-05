@@ -52,7 +52,7 @@ fun WeatherEntity.toWeatherInfo(): WeatherInfo {
     val now = LocalDateTime.now()
     val location = LocationModel(latitude, longitude)
     val currentWeatherData = weatherDataMap[0]?.find {
-        val hour = if (now.minute < 30) now.hour else now.hour + 1
+        val hour = if (now.minute < 60) now.hour else now.hour + 1
         it.time.hour == hour
     }
 
