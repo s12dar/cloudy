@@ -18,7 +18,7 @@ sealed class WeatherType(
     )
 
     object PartlyCloudy : WeatherType(
-        weatherDesc = "Partly com.lyvetech.cloudy",
+        weatherDesc = "Partly cloudy",
         iconRes = R.drawable.ic_cloudy
     )
 
