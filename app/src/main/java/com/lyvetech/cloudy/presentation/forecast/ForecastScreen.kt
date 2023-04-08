@@ -225,4 +225,4 @@ private fun Day(date: LocalDate, isSelected: Boolean, onClick: (LocalDate) -> Un
 private val dateFormatter = DateTimeFormatter.ofPattern("dd")
 
 @RequiresApi(Build.VERSION_CODES.O)
-private val dateFormatter2 = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")
+private val dateFormatter2: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE MMM d, hh:mm a")
