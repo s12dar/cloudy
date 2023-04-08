@@ -33,9 +33,7 @@ class HomeRepositoryImpl @Inject constructor(
                         is Resource.Success -> {
                             localDataSource.deleteAllWeather()
                             result.data?.let {
-                                insertWeatherResponse(
-                                    it
-                                )
+                                insertWeatherResponse(it)
                             }
                             val localResult = fetchWeatherFromLocal()?.toWeatherInfo()
                             emit(Resource.Success(localResult))
