@@ -84,7 +84,6 @@ internal fun ForecastScreen(
     selectedTempUnit: String
 ) {
     val dayNo = selection.getDifferences(LocalDate.now())
-
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
