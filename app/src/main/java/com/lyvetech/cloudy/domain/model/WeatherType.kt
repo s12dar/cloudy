@@ -9,7 +9,7 @@ sealed class WeatherType(
 ) {
     object ClearSky : WeatherType(
         weatherDesc = "Clear Sky",
-        iconRes = R.drawable.ic_clear_sky
+        iconRes = R.drawable.ic_sunny
     )
 
     object MainlyClear : WeatherType(

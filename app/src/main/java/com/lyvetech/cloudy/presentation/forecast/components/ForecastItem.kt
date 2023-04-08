@@ -68,7 +68,7 @@ fun ForecastItem(
         ) {
             Image(
                 modifier = Modifier
-                    .size(96.dp),
+                    .size(72.dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
                 painter = painterResource(id = weatherIcon),
                 contentDescription = null,
