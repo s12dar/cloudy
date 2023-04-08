@@ -41,7 +41,11 @@ fun MainContent() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        bottomBar = { CloudyBottomBar(navController) },
+        bottomBar = {
+            if (getCurrentTopLevelDestination(navController) != null) CloudyBottomBar(
+                navController
+            )
+        },
         topBar = {
             if (getCurrentTopLevelDestination(navController) != null) CloudyTopAppBar(
                 navController
