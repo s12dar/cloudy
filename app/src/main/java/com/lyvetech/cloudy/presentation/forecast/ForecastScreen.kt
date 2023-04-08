@@ -2,17 +2,19 @@ package com.lyvetech.cloudy.presentation.forecast
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,6 +32,8 @@ import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
 import com.lyvetech.cloudy.common.utils.displayText
+import com.lyvetech.cloudy.common.utils.getDifferences
+import com.lyvetech.cloudy.domain.model.WeatherInfo
 import com.lyvetech.cloudy.presentation.forecast.components.ForecastItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -53,22 +57,25 @@ fun ForecastRoute(
         firstVisibleWeekDate = currentDate,
     )
 
-    ForecastScreen(
-        modifier = modifier,
-        weatherState = weatherState,
-        selection = selection,
-        name = uiState.value.weatherInfo?.currentWeatherData?.weatherType?.weatherDesc.toString()
-    )
+    uiState.value.weatherInfo?.let {
+        ForecastScreen(
+            modifier = modifier,
+            weatherState = weatherState,
+            selection = selection,
+            weatherInfo = it
+        )
+    }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun ForecastScreen(
     modifier: Modifier = Modifier,
     weatherState: WeekCalendarState,
     selection: MutableState<LocalDate>,
-    name: String
+    weatherInfo: WeatherInfo
 ) {
-    Log.d("DEBUG CLOUDY", selection.value.toString())
+    val dayNo = selection.getDifferences(LocalDate.now())
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -84,7 +91,24 @@ internal fun ForecastScreen(
             },
         )
 
-        ForecastItem(modifier = modifier, name = name)
+        Spacer(modifier = Modifier.height(22.dp))
+
+        LazyColumn {
+            weatherInfo.weatherDataPerDay[dayNo]?.let {
+                itemsIndexed(it) { index, item ->
+                    if (index != 0) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+
+                    ForecastItem(
+                        dateAndTime = item.time.format(dateFormatter2),
+                        weatherType = item.weatherType.weatherDesc,
+                        temperature = item.temperatureCelsius.toString(),
+                        weatherIcon = item.weatherType.iconRes
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -130,3 +154,6 @@ private fun Day(date: LocalDate, isSelected: Boolean, onClick: (LocalDate) -> Un
 
 @RequiresApi(Build.VERSION_CODES.O)
 private val dateFormatter = DateTimeFormatter.ofPattern("dd")
+
+@RequiresApi(Build.VERSION_CODES.O)
+private val dateFormatter2 = DateTimeFormatter.ofPattern("dd-MMMM-yyyy")

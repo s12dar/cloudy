@@ -48,7 +48,7 @@ private fun WeatherDataEntity.toWeatherDataMap(): Map<Int, List<WeatherData>> {
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun WeatherEntity.toWeatherInfo(): WeatherInfo {
-    val weatherDataMap = weatherData.toWeatherDataMap()
+    val weatherDataMap = this.weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
     val location = LocationModel(latitude, longitude)
     val currentWeatherData = weatherDataMap[0]?.find {
