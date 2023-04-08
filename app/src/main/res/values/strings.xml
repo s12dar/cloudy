@@ -31,5 +31,7 @@
     <string name="close">Close</string>
     <string name="ok">OK</string>
     <string name="settings">Settings</string>
+    <string name="past_weather_msg">You know what? Life is too short, please don\'t look back</string>
+    <string name="future_weather_msg">You know what? Life is too short, let\'s live in the moment</string>
 
 </resources>

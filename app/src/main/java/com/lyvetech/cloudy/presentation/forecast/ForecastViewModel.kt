@@ -43,4 +43,8 @@ class ForecastViewModel @Inject constructor(
 
         _uiState.value = _uiState.value.copy(isLoading = false)
     }
+
+    fun refreshWeather() {
+        getWeatherInfo()
+    }
 }

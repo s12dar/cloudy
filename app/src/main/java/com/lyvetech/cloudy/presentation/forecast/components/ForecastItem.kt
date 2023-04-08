@@ -56,7 +56,7 @@ fun ForecastItem(
             )
 
             Text(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 20.dp),
                 text = dateAndTime,
                 style = MaterialTheme.typography.bodySmall,
             )
@@ -84,6 +84,6 @@ private fun ForecastItemPreview() {
         dateAndTime = "8 Apr 2023, 06:00AM",
         weatherType = "Cloudy",
         temperature = "13.55",
-        weatherIcon = R.drawable.ic_snowy,
+        weatherIcon = R.drawable.ic_snowy
     )
 }
