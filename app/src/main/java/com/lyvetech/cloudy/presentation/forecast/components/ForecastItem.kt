@@ -50,14 +50,15 @@ fun ForecastItem(
             )
 
             Text(
+                modifier = Modifier.padding(top = 4.dp),
                 text = weatherType,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodyMedium,
             )
 
             Text(
                 modifier = Modifier.padding(top = 16.dp),
                 text = dateAndTime,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.bodySmall,
             )
         }
 
