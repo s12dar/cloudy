@@ -3,6 +3,7 @@ package com.lyvetech.cloudy.presentation.forecast
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,8 +34,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.kizitonwose.calendar.compose.WeekCalendar
 import com.kizitonwose.calendar.compose.weekcalendar.WeekCalendarState
 import com.kizitonwose.calendar.compose.weekcalendar.rememberWeekCalendarState
+import com.lyvetech.cloudy.R
+import com.lyvetech.cloudy.common.Constants
 import com.lyvetech.cloudy.common.utils.displayText
 import com.lyvetech.cloudy.common.utils.getDifferences
+import com.lyvetech.cloudy.common.utils.toFahrenheit
 import com.lyvetech.cloudy.domain.model.WeatherInfo
 import com.lyvetech.cloudy.presentation.forecast.components.ForecastItem
 import java.time.LocalDate
@@ -44,8 +50,8 @@ fun ForecastRoute(
     modifier: Modifier = Modifier,
     viewModel: ForecastViewModel = hiltViewModel(),
 ) {
-
     val uiState = viewModel.uiState.collectAsState()
+    val selectedTempUnit = uiState.value.appPreferences.selectedTempUnit.toString()
     val currentDate = remember { LocalDate.now() }
     val startDate = remember { currentDate }
     val endDate = remember { currentDate.plusDays(7) }
@@ -62,7 +68,8 @@ fun ForecastRoute(
             modifier = modifier,
             weatherState = weatherState,
             selection = selection,
-            weatherInfo = it
+            weatherInfo = it,
+            selectedTempUnit = selectedTempUnit
         )
     }
 }
@@ -73,9 +80,11 @@ internal fun ForecastScreen(
     modifier: Modifier = Modifier,
     weatherState: WeekCalendarState,
     selection: MutableState<LocalDate>,
-    weatherInfo: WeatherInfo
+    weatherInfo: WeatherInfo,
+    selectedTempUnit: String
 ) {
     val dayNo = selection.getDifferences(LocalDate.now())
+
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -93,8 +102,8 @@ internal fun ForecastScreen(
 
         Spacer(modifier = Modifier.height(22.dp))
 
-        LazyColumn {
-            weatherInfo.weatherDataPerDay[dayNo]?.let {
+        weatherInfo.weatherDataPerDay[dayNo]?.let {
+            LazyColumn {
                 itemsIndexed(it) { index, item ->
                     if (index != 0) {
                         Spacer(modifier = Modifier.height(16.dp))
@@ -103,8 +112,37 @@ internal fun ForecastScreen(
                     ForecastItem(
                         dateAndTime = item.time.format(dateFormatter2),
                         weatherType = item.weatherType.weatherDesc,
-                        temperature = item.temperatureCelsius.toString(),
+                        temperature =
+                        if (selectedTempUnit == Constants.FAHRENHEIT) "${
+                            (item.temperatureCelsius.toFahrenheit())
+                        }${Constants.FAHRENHEIT_SIGN}" else "${item.temperatureCelsius}${Constants.CELSIUS_SIGN}",
                         weatherIcon = item.weatherType.iconRes
+                    )
+                }
+            }
+        } ?: run {
+            Column(
+                modifier = modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = modifier,
+                    painter = painterResource(id = R.drawable.ic_no_weather_info),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+                )
+
+                if (dayNo < 0) {
+                    Text(
+                        text = "Life is too short, please don't look back",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Text(
+                        text = "Life is too short, let's live in the moment",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
