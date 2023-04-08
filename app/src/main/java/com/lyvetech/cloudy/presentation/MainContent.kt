@@ -24,7 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.common.navigation.CloudyNavGraph
@@ -40,7 +42,11 @@ fun MainContent() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { CloudyBottomBar(navController) },
-        topBar = { CloudyTopAppBar(navController) }
+        topBar = {
+            if (getCurrentTopLevelDestination(navController) != null) CloudyTopAppBar(
+                navController
+            )
+        }
     ) {
         Column {
             CloudyNavGraph(
@@ -101,5 +107,19 @@ private fun CloudyBottomBar(
                 modifier = Modifier.navigationBarsPadding()
             )
         }
+    }
+}
+
+@Composable
+private fun getCurrentDestination(navController: NavHostController): NavDestination? {
+    return navController.currentBackStackEntryAsState().value?.destination
+}
+
+@Composable
+private fun getCurrentTopLevelDestination(navController: NavHostController): NavDestinations? {
+    return when (getCurrentDestination(navController = navController)?.route) {
+        "home" -> NavDestinations.Screen.Home
+        "forecast" -> NavDestinations.Screen.Forecast
+        else -> null
     }
 }
