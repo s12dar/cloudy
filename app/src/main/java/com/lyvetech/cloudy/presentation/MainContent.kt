@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,7 +50,7 @@ fun MainContent() {
         topBar = {
             if (getCurrentTopLevelDestination(navController) != null) CloudyTopAppBar(
                 navController
-            )
+            ) else CloudySecondaryTopAppBar(navController)
         }
     ) {
         Column {
@@ -76,6 +77,26 @@ private fun CloudyTopAppBar(
                 tint = MaterialTheme.colorScheme.onSurface,
             ) {
                 navController.navigate(NavDestinations.Screen.Settings.route)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun CloudySecondaryTopAppBar(
+    navController: NavHostController
+) {
+    CenterAlignedTopAppBar(
+        title = {},
+        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
+        navigationIcon = {
+            FeedbackIconButton(
+                imageVector = Icons.Outlined.ArrowBack,
+                contentDescription = stringResource(R.string.settings),
+                tint = MaterialTheme.colorScheme.onSurface,
+            ) {
+                navController.navigateUp()
             }
         }
     )
