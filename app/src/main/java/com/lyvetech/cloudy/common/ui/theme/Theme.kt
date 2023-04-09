@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightThemeColors: ColorScheme = lightColorScheme(
     primary = Purple40,
@@ -93,6 +94,17 @@ fun CloudyTheme(
             content = content,
         )
     }
+
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(
+        color = colorScheme.background,
+        darkIcons = !darkTheme
+    )
+    systemUiController.setNavigationBarColor(
+        color = colorScheme.background,
+        darkIcons = !darkTheme
+    )
 }
 
 @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)

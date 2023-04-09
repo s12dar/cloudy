@@ -181,6 +181,7 @@ dependencies {
 
 
     implementation("com.google.accompanist:accompanist-navigation-animation:0.29.0-alpha")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.0-alpha")
     implementation("androidx.core:core-splashscreen:1.0.0")
 
     implementation("com.kizitonwose.calendar:compose:2.2.1-SNAPSHOT")
