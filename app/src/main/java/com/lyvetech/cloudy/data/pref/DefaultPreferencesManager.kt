@@ -14,8 +14,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import logcat.asLog
-import logcat.logcat
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -42,7 +40,6 @@ class DefaultPreferencesManager @Inject constructor(
     override val appPreferences: Flow<AppPreferences> = context.dataStore.data
         .catch { exception ->
             if (exception is IOException) {
-                logcat { exception.asLog() }
                 emit(emptyPreferences())
             } else {
                 throw exception
