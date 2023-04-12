@@ -1,7 +1,7 @@
 <img src="/arts/cloudy_feature_preview.png">
 
 ## cloudy ☁️
-Cloudy is an open-source weather app for Android that provides users with up-to-date weather information based on their current location, as well as a week-long forecast. It is built using the latest Android technologies and follows the MVVM clean architecture, with an offline-first approach that caches weather data for improved performance.
+Cloudy is an open-source weather app for Android that provides users with up-to-date weather information based on their current location, as well as a week-long forecast. It is built using the latest Android technologies and follows the MVVM with clean architecture, with an offline-first approach that caches weather data for improved performance.
 
 ### Tech stack 🏗
 - [Kotlin](https://kotlinlang.org/)
