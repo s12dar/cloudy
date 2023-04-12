@@ -10,8 +10,7 @@ Cloudy is an open-source weather app for Android that provides users with up-to-
 - [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Flow](https://developer.android.com/kotlin/flow)
 - [Retrofit](https://square.github.io/retrofit/)
 - [OkHttp3](https://square.github.io/okhttp/)
-- [JUnit](https://junit.org/junit5/)
-- [Mockito](https://site.mockito.org/)
+- [JUnit](https://junit.org/junit5/) & [Mockito](https://site.mockito.org/)
 - [Fastlane](https://fastlane.tools/)
 
 ### Development Setup 💻
