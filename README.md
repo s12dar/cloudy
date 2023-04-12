@@ -1,1 +1,1 @@
-<img src="/arts/cloudy_fgit eature_preview.png">
+<img src="/arts/cloudy_feature_preview.png">
