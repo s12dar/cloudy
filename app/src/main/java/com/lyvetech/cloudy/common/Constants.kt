@@ -12,6 +12,6 @@ object Constants {
     /**
      * Settings Screen
      */
-    const val APP_URL = "https://github.com/s12dar"
+    const val APP_URL = "https://play.google.com/store/apps/details?id=com.lyvetech.cloudy"
     const val CLOUDY_EMAIL = "sayhitocloudy@gmail.com"
 }
