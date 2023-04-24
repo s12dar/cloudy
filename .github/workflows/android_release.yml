@@ -81,5 +81,4 @@ jobs:
           releaseFile: ${{ steps.sign_apk.outputs.signedReleaseFile }}
           track: production
           inAppUpdatePriority: 0
-          userFraction: 0.5
           whatsNewDirectory: playwhatsnew
