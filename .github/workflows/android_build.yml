@@ -1,25 +1,43 @@
-# name: Android Build
+name: Build Android App
 
-# on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: macos-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-#       - name: Set up JDK 11
-#         uses: actions/setup-java@v2
-#         with:
-#           distribution: temurin
-#           java-version: 11
-#           cache: gradle
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: 'adopt'
 
-# #      - name: Build with Gradle
-# #        run: ./gradlew build
+      - name: Grant execute permissions for gradlew
+        run: chmod +x ./gradlew
 
-#       - name: Run unit tests
-#         run: fastlane test
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Android App
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk

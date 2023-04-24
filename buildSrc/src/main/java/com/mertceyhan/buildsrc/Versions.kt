@@ -1,7 +1,7 @@
 @file:Suppress("PackageDirectoryMismatch")
 
 object Versions {
-    const val gradleVersion = "8.1.0-alpha08"
+    const val gradleVersion = "8.1.0-beta01"
     const val kotlinVersion = "1.8.0"
     const val daggerHiltVersion = "2.44.2"
     const val hiltVersion = "1.0.0"
