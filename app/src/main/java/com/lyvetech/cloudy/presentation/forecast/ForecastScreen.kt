@@ -47,7 +47,6 @@ import com.lyvetech.cloudy.common.Constants
 import com.lyvetech.cloudy.common.utils.displayText
 import com.lyvetech.cloudy.common.utils.getDifferences
 import com.lyvetech.cloudy.common.utils.toFahrenheit
-import com.lyvetech.cloudy.domain.model.WeatherInfo
 import com.lyvetech.cloudy.presentation.forecast.components.ForecastItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -75,111 +74,111 @@ fun ForecastRoute(
         firstVisibleWeekDate = currentDate,
     )
 
-    uiState.value.weatherInfo?.let {
-        ForecastScreen(
-            modifier = modifier,
-            weatherState = weatherState,
-            selection = selection,
-            weatherInfo = it,
-            selectedTempUnit = selectedTempUnit,
-            pullRefreshState = pullRefreshState,
-            isForecastLoading = isForecastLoading
-        )
-    }
+//    uiState.value.weatherInfo?.let {
+//        ForecastScreen(
+//            modifier = modifier,
+//            weatherState = weatherState,
+//            selection = selection,
+//            weatherInfo = it,
+//            selectedTempUnit = selectedTempUnit,
+//            pullRefreshState = pullRefreshState,
+//            isForecastLoading = isForecastLoading
+//        )
+//    }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-internal fun ForecastScreen(
-    modifier: Modifier = Modifier,
-    weatherState: WeekCalendarState,
-    pullRefreshState: PullRefreshState,
-    selection: MutableState<LocalDate>,
-    weatherInfo: WeatherInfo,
-    isForecastLoading: Boolean,
-    selectedTempUnit: String
-) {
-    val dayNo = selection.getDifferences(LocalDate.now())
-
-    Box(
-        modifier = modifier
-            .pullRefresh(pullRefreshState)
-            .fillMaxWidth()
-    ) {
-        Column(
-            horizontalAlignment = CenterHorizontally
-        ) {
-            WeekCalendar(
-                state = weatherState,
-                dayContent = { day ->
-                    Day(day.date, isSelected = selection.value == day.date) { clicked ->
-                        if (selection.value != clicked) {
-                            selection.value = clicked
-                        }
-                    }
-                },
-            )
-
-            Spacer(modifier = Modifier.height(22.dp))
-
-            weatherInfo.weatherDataPerDay[dayNo]?.let {
-                LazyColumn {
-                    itemsIndexed(it) { index, item ->
-                        if (index != 0) {
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
-
-                        ForecastItem(
-                            dateAndTime = item.time.format(dateFormatter2),
-                            weatherType = item.weatherType.weatherDesc,
-                            temperature =
-                            if (selectedTempUnit == Constants.FAHRENHEIT) "${
-                                (item.temperatureCelsius.toFahrenheit())
-                            }${Constants.FAHRENHEIT_SIGN}" else "${item.temperatureCelsius}${Constants.CELSIUS_SIGN}",
-                            weatherIcon = item.weatherType.iconRes
-                        )
-                    }
-                }
-            } ?: run {
-                Column(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalAlignment = CenterHorizontally,
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_no_weather_info),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-                    )
-
-                    if (dayNo < 0) {
-                        Text(
-                            text = stringResource(id = R.string.past_weather_msg),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    } else {
-                        Text(
-                            text = stringResource(id = R.string.future_weather_msg),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-                    }
-                }
-            }
-        }
-
-        PullRefreshIndicator(
-            refreshing = isForecastLoading,
-            state = pullRefreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
-    }
-}
+//@OptIn(ExperimentalMaterialApi::class)
+//@RequiresApi(Build.VERSION_CODES.O)
+//@Composable
+//internal fun ForecastScreen(
+//    modifier: Modifier = Modifier,
+//    weatherState: WeekCalendarState,
+//    pullRefreshState: PullRefreshState,
+//    selection: MutableState<LocalDate>,
+//    weatherInfo: WeatherInfo,
+//    isForecastLoading: Boolean,
+//    selectedTempUnit: String
+//) {
+//    val dayNo = selection.getDifferences(LocalDate.now())
+//
+//    Box(
+//        modifier = modifier
+//            .pullRefresh(pullRefreshState)
+//            .fillMaxWidth()
+//    ) {
+//        Column(
+//            horizontalAlignment = CenterHorizontally
+//        ) {
+//            WeekCalendar(
+//                state = weatherState,
+//                dayContent = { day ->
+//                    Day(day.date, isSelected = selection.value == day.date) { clicked ->
+//                        if (selection.value != clicked) {
+//                            selection.value = clicked
+//                        }
+//                    }
+//                },
+//            )
+//
+//            Spacer(modifier = Modifier.height(22.dp))
+//
+//            weatherInfo.weatherDataPerDay[dayNo]?.let {
+//                LazyColumn {
+//                    itemsIndexed(it) { index, item ->
+//                        if (index != 0) {
+//                            Spacer(modifier = Modifier.height(16.dp))
+//                        }
+//
+//                        ForecastItem(
+//                            dateAndTime = item.time.format(dateFormatter2),
+//                            weatherType = item.weatherType.weatherDesc,
+//                            temperature =
+//                            if (selectedTempUnit == Constants.FAHRENHEIT) "${
+//                                (item.temperatureCelsius.toFahrenheit())
+//                            }${Constants.FAHRENHEIT_SIGN}" else "${item.temperatureCelsius}${Constants.CELSIUS_SIGN}",
+//                            weatherIcon = item.weatherType.iconRes
+//                        )
+//                    }
+//                }
+//            } ?: run {
+//                Column(
+//                    modifier = modifier
+//                        .fillMaxWidth()
+//                        .padding(8.dp),
+//                    horizontalAlignment = CenterHorizontally,
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = R.drawable.ic_no_weather_info),
+//                        contentDescription = null,
+//                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+//                    )
+//
+//                    if (dayNo < 0) {
+//                        Text(
+//                            text = stringResource(id = R.string.past_weather_msg),
+//                            textAlign = TextAlign.Center,
+//                            color = MaterialTheme.colorScheme.primary,
+//                            style = MaterialTheme.typography.bodyMedium
+//                        )
+//                    } else {
+//                        Text(
+//                            text = stringResource(id = R.string.future_weather_msg),
+//                            textAlign = TextAlign.Center,
+//                            color = MaterialTheme.colorScheme.primary,
+//                            style = MaterialTheme.typography.bodyMedium
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//
+//        PullRefreshIndicator(
+//            refreshing = isForecastLoading,
+//            state = pullRefreshState,
+//            modifier = Modifier.align(Alignment.TopCenter)
+//        )
+//    }
+//}
 
 @SuppressLint("NewApi")
 @Composable

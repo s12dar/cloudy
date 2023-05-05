@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
 }
@@ -111,11 +112,14 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation("androidx.compose.foundation:foundation:1.4.1")
+    implementation("androidx.compose.foundation:foundation:1.4.3")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.1")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.29.0-alpha")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.31.0-alpha")
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.kizitonwose.calendar:compose:2.2.1-SNAPSHOT")
     implementation("com.google.accompanist:accompanist-permissions:0.20.3")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }

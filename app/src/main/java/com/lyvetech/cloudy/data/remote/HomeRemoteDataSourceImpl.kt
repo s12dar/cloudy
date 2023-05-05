@@ -1,6 +1,7 @@
 package com.lyvetech.cloudy.data.remote
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.lyvetech.cloudy.common.model.LocationModel
 import com.lyvetech.cloudy.data.remote.dto.WeatherDto
@@ -20,11 +21,12 @@ class HomeRemoteDataSourceImpl @Inject constructor(
         withContext(ioDispatcher) {
             return@withContext try {
                 Resource.Success(
-                    data = apiService.getWeatherData(
-                        lat = location.latitude, long = location.longitude
+                    data = apiService.getCurrentWeather(
+                        latitude = location.latitude, longitude = location.longitude
                     ).body()
                 )
             } catch (e: Exception) {
+                Log.i("Hi Serdar", e.toString())
                 Resource.Error(null, e.toString())
             }
         }
