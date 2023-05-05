@@ -143,37 +143,20 @@ sealed class WeatherType(
     )
 
     companion object {
-        fun fromWMO(code: Int): WeatherType {
-            return when (code) {
-                0 -> ClearSky
-                1 -> MainlyClear
-                2 -> PartlyCloudy
-                3 -> Overcast
-                45 -> Foggy
-                48 -> DepositingRimeFog
-                51 -> LightDrizzle
-                53 -> ModerateDrizzle
-                55 -> DenseDrizzle
-                56 -> LightFreezingDrizzle
-                57 -> DenseFreezingDrizzle
-                61 -> SlightRain
-                63 -> ModerateRain
-                65 -> HeavyRain
-                66 -> LightFreezingDrizzle
-                67 -> HeavyFreezingRain
-                71 -> SlightSnowFall
-                73 -> ModerateSnowFall
-                75 -> HeavySnowFall
-                77 -> SnowGrains
-                80 -> SlightRainShowers
-                81 -> ModerateRainShowers
-                82 -> ViolentRainShowers
-                85 -> SlightSnowShowers
-                86 -> HeavySnowShowers
-                95 -> ModerateThunderstorm
-                96 -> SlightHailThunderstorm
-                99 -> HeavyHailThunderstorm
-                else -> ClearSky
+        fun fromWMO(iconCode: String): WeatherType {
+            return when {
+                iconCode.contains("01") -> ClearSky
+                iconCode.contains("02") -> PartlyCloudy
+                iconCode.contains("03") -> PartlyCloudy
+                iconCode.contains("04") -> PartlyCloudy
+                iconCode.contains("09") -> LightDrizzle
+                iconCode.contains("10") -> LightDrizzle
+                iconCode.contains("11") -> HeavyHailThunderstorm
+                iconCode.contains("13") -> SnowGrains
+                iconCode.contains("50") -> PartlyCloudy
+                else -> {
+                    MainlyClear
+                }
             }
         }
     }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -29,9 +28,10 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.lyvetech.cloudy.R
 import com.lyvetech.cloudy.common.Constants
 import com.lyvetech.cloudy.common.ui.theme.CloudyTheme
+import com.lyvetech.cloudy.common.utils.toCelsius
 import com.lyvetech.cloudy.common.utils.toDateFormat
 import com.lyvetech.cloudy.common.utils.toFahrenheit
-import com.lyvetech.cloudy.common.utils.toReadableLocation
+import com.lyvetech.cloudy.domain.model.WeatherType
 import com.lyvetech.cloudy.presentation.home.components.HomeBody
 import com.lyvetech.cloudy.presentation.home.components.WeatherDataDisplay
 
@@ -77,25 +77,23 @@ internal fun HomeScreen(
 
     val selectedTempUnit = uiState.appPreferences.selectedTempUnit
 
-    uiState.weatherInfo?.let { it1 ->
-        it1.currentWeatherData?.let { it2 ->
-            HomeContent(
-                modifier = modifier,
-                pullRefreshState = pullRefreshState,
-                scrollState = scrollState,
-                isFeedLoading = isFeedLoading,
-                location = it1.location.toReadableLocation(),
-                lastFetchedTime = it1.lastFetchedTime.toDateFormat(),
-                temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
-                    (it2.temperatureCelsius.toFahrenheit())
-                }${Constants.FAHRENHEIT_SIGN}" else "${it2.temperatureCelsius}${Constants.CELSIUS_SIGN}",
-                weatherType = it2.weatherType.weatherDesc,
-                humidity = it2.humidity,
-                windSpeed = it2.windSpeed,
-                pressure = it2.pressure,
-                img = it2.weatherType.iconRes
-            )
-        }
+    uiState.weather?.let {
+        HomeContent(
+            modifier = modifier,
+            pullRefreshState = pullRefreshState,
+            scrollState = scrollState,
+            isFeedLoading = isFeedLoading,
+            location = it.name,
+            lastFetchedTime = it.lastFetchedTime.toDateFormat(),
+            temperature = if (selectedTempUnit.toString() == Constants.FAHRENHEIT) "${
+                (it.networkWeatherCondition.temp.toFahrenheit())
+            }${Constants.FAHRENHEIT_SIGN}" else "${it.networkWeatherCondition.temp.toCelsius()}${Constants.CELSIUS_SIGN}",
+            weatherType = it.networkWeatherDescription.first().description.toString(),
+            humidity = it.networkWeatherCondition.humidity,
+            windSpeed = it.wind.speed,
+            pressure = it.networkWeatherCondition.pressure,
+            img = WeatherType.fromWMO(it.networkWeatherDescription.first().icon.toString()).iconRes
+        )
     }
 }
 

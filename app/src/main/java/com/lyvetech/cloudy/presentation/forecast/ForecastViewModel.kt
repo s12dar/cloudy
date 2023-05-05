@@ -30,10 +30,10 @@ class ForecastViewModel @Inject constructor(
         _uiState.value = _uiState.value.copy(isLoading = true)
         viewModelScope.launch {
             locationTracker.getCurrentLocation().data?.let { location ->
-                repository.getWeatherInfo(location).collect { weatherInfoResponse ->
+                repository.getWeather(location).collect { weatherInfoResponse ->
                     preferencesManager.appPreferences.collect { appPreferences ->
                         _uiState.value = _uiState.value.copy(
-                            weatherInfo = weatherInfoResponse.data,
+                            weather = weatherInfoResponse.data,
                             appPreferences = appPreferences
                         )
                     }

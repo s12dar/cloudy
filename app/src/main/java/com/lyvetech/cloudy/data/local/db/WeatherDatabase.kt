@@ -7,10 +7,11 @@ import com.lyvetech.cloudy.data.local.db.WeatherDatabase.Companion.DB_VERSION
 import com.lyvetech.cloudy.data.local.db.WeatherDatabase.Companion.EXP_FALSE
 import com.lyvetech.cloudy.data.local.dao.WeatherDao
 import com.lyvetech.cloudy.data.local.entity.WeatherEntity
+import com.lyvetech.cloudy.data.local.entity.WeatherForecastEntity
 import com.lyvetech.cloudy.data.util.Converters
 
 @Database(
-    entities = [WeatherEntity::class],
+    entities = [WeatherEntity::class, WeatherForecastEntity::class],
 
     version = DB_VERSION,
     exportSchema = EXP_FALSE
@@ -23,7 +24,7 @@ abstract class WeatherDatabase : RoomDatabase() {
 
     companion object {
         const val DB_NAME = "weather.db"
-        const val DB_VERSION = 5
+        const val DB_VERSION = 6
         const val EXP_FALSE = false
     }
 }
