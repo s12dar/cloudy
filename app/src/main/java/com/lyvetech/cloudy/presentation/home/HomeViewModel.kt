@@ -3,7 +3,7 @@ package com.lyvetech.cloudy.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lyvetech.cloudy.domain.pref.PreferencesManager
-import com.lyvetech.cloudy.domain.repository.HomeRepository
+import com.lyvetech.cloudy.domain.repository.WeatherRepository
 import com.lyvetech.cloudy.domain.service.LocationTracker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: HomeRepository,
+    private val repository: WeatherRepository,
     private val locationTracker: LocationTracker,
     private val preferencesManager: PreferencesManager
 ) : ViewModel() {
@@ -32,6 +32,7 @@ class HomeViewModel @Inject constructor(
             locationTracker.getCurrentLocation().data?.let { location ->
                 repository.getWeather(location).collect { weatherInfoResponse ->
                     preferencesManager.appPreferences.collect { appPreferences ->
+                        weatherInfoResponse.data?.cityId?.let { saveCityId(it) }
                         _uiState.value = _uiState.value.copy(
                             weather = weatherInfoResponse.data,
                             appPreferences = appPreferences
@@ -42,6 +43,12 @@ class HomeViewModel @Inject constructor(
         }
 
         _uiState.value = _uiState.value.copy(isLoading = false)
+    }
+
+    private fun saveCityId(cityId: Int) {
+        viewModelScope.launch {
+            preferencesManager.updateCityId(cityId)
+        }
     }
 
     fun refreshWeather() {

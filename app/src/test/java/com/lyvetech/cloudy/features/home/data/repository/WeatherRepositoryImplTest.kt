@@ -2,9 +2,9 @@ package com.lyvetech.cloudy.features.home.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lyvetech.cloudy.domain.util.Resource
-import com.lyvetech.cloudy.data.local.HomeLocalDataSource
-import com.lyvetech.cloudy.data.remote.HomeRemoteDataSource
-import com.lyvetech.cloudy.data.repository.HomeRepositoryImpl
+import com.lyvetech.cloudy.data.local.WeatherLocalDataSource
+import com.lyvetech.cloudy.data.remote.WeatherRemoteDataSource
+import com.lyvetech.cloudy.data.repository.WeatherRepositoryImpl
 import com.lyvetech.cloudy.utils.*
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
@@ -20,18 +20,18 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class HomeRepositoryImplTest {
+class WeatherRepositoryImplTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var systemUnderTest: HomeRepositoryImpl
+    private lateinit var systemUnderTest: WeatherRepositoryImpl
 
     @MockK
-    private lateinit var homeRemoteDataSource: HomeRemoteDataSource
+    private lateinit var weatherRemoteDataSource: WeatherRemoteDataSource
 
     @MockK
-    private lateinit var homeLocalDataSource: HomeLocalDataSource
+    private lateinit var weatherLocalDataSource: WeatherLocalDataSource
 
     private val mainThreadSurrogate = newSingleThreadContext("threading")
 
@@ -42,9 +42,9 @@ class HomeRepositoryImplTest {
 
         Dispatchers.setMain(mainThreadSurrogate)
 
-        systemUnderTest = HomeRepositoryImpl(
-            homeRemoteDataSource,
-            homeLocalDataSource,
+        systemUnderTest = WeatherRepositoryImpl(
+            weatherRemoteDataSource,
+            weatherLocalDataSource,
             Dispatchers.Main
         )
     }
@@ -59,16 +59,16 @@ class HomeRepositoryImplTest {
     fun `check that getWeather with data is not expired fetches successfully from the local source`() {
         runBlocking {
             coEvery {
-                homeLocalDataSource.getWeather()
+                weatherLocalDataSource.getWeather()
             } returns fakeNotExpiredWeatherEntity
 
             val result = systemUnderTest.getWeatherInfo(dummyLocation)
 
             result.data `should be` fakeNotExpiredWeatherInfo
-            coVerify(exactly = 1) { homeLocalDataSource.getWeather() }
-            coVerify(exactly = 0) { homeRemoteDataSource.getWeather(any()) }
-            coVerify(exactly = 0) { homeLocalDataSource.deleteAllWeather() }
-            coVerify(exactly = 0) { homeLocalDataSource.insertWeather(any()) }
+            coVerify(exactly = 1) { weatherLocalDataSource.getWeather() }
+            coVerify(exactly = 0) { weatherRemoteDataSource.getWeather(any()) }
+            coVerify(exactly = 0) { weatherLocalDataSource.deleteAllWeather() }
+            coVerify(exactly = 0) { weatherLocalDataSource.insertWeather(any()) }
         }
     }
 
@@ -77,28 +77,28 @@ class HomeRepositoryImplTest {
         runBlocking {
 
             coEvery {
-                homeLocalDataSource.getWeather()
+                weatherLocalDataSource.getWeather()
             } returns fakeExpiredWeatherEntity
 
             coEvery {
-                homeRemoteDataSource.getWeather(dummyLocation)
+                weatherRemoteDataSource.getWeather(dummyLocation)
             } returns Resource.Success(fakeWeatherDto)
 
             coEvery {
-                homeLocalDataSource.deleteAllWeather()
+                weatherLocalDataSource.deleteAllWeather()
             } just Runs
 
             coEvery {
-                homeLocalDataSource.insertWeather(any())
+                weatherLocalDataSource.insertWeather(any())
             } just Runs
 
             val result = systemUnderTest.getWeatherInfo(dummyLocation)
 
             result.data `should be` fakeExpiredWeatherInfo
-            coVerify(exactly = 2) { homeLocalDataSource.getWeather() }
-            coVerify(exactly = 1) { homeRemoteDataSource.getWeather(any()) }
-            coVerify(exactly = 1) { homeLocalDataSource.deleteAllWeather() }
-            coVerify(exactly = 1) { homeLocalDataSource.insertWeather(any()) }
+            coVerify(exactly = 2) { weatherLocalDataSource.getWeather() }
+            coVerify(exactly = 1) { weatherRemoteDataSource.getWeather(any()) }
+            coVerify(exactly = 1) { weatherLocalDataSource.deleteAllWeather() }
+            coVerify(exactly = 1) { weatherLocalDataSource.insertWeather(any()) }
         }
     }
 }

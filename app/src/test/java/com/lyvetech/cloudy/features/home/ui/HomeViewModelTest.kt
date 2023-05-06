@@ -3,7 +3,7 @@ package com.lyvetech.cloudy.features.home.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.lyvetech.cloudy.common.ui.UiState
 import com.lyvetech.cloudy.domain.util.Resource
-import com.lyvetech.cloudy.data.repository.HomeRepositoryImpl
+import com.lyvetech.cloudy.data.repository.WeatherRepositoryImpl
 import com.lyvetech.cloudy.domain.service.LocationTracker
 import com.lyvetech.cloudy.domain.pref.PreferencesManager
 import com.lyvetech.cloudy.utils.dummyLocation
@@ -33,7 +33,7 @@ class HomeViewModelTest {
     private lateinit var systemUnderTest: HomeViewModel
 
     @MockK
-    private lateinit var homeRepository: HomeRepositoryImpl
+    private lateinit var homeRepository: WeatherRepositoryImpl
 
     @MockK
     private lateinit var locationTracker: LocationTracker

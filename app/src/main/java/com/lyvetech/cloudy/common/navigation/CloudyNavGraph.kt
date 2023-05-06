@@ -60,5 +60,4 @@ fun NavGraphBuilder.forecastScreen(
     ) {
         ForecastRoute(modifier = modifier)
     }
-
 }

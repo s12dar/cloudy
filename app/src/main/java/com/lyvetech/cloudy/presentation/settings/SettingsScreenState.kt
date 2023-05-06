@@ -13,7 +13,8 @@ data class SettingsScreenState(
         val initialState = SettingsScreenState(
             appPreferences = AppPreferences(
                 selectedTheme = ThemeSelection.SYSTEM,
-                selectedTempUnit = TempUnitSelection.CELSIUS
+                selectedTempUnit = TempUnitSelection.CELSIUS,
+                savedCityId = -1
             ),
             showThemeDialog = false,
             showTempUnitDialog = false

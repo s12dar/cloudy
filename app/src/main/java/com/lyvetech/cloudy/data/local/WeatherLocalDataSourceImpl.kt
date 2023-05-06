@@ -8,16 +8,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class HomeLocalDataSourceImpl @Inject constructor(
+class WeatherLocalDataSourceImpl @Inject constructor(
     private val weatherDao: WeatherDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : HomeLocalDataSource {
+) : WeatherLocalDataSource {
     override suspend fun insertWeather(weatherEntity: WeatherEntity) =
         withContext(ioDispatcher) {
             weatherDao.insertWeather(weatherEntity = weatherEntity)
         }
 
-    override suspend fun insertWeatherForecast(weatherForecastEntity: WeatherForecastEntity) =
+    override suspend fun insertWeatherForecast(weatherForecastEntity: List<WeatherForecastEntity>) =
         withContext(ioDispatcher) {
             weatherDao.insertWeatherForecast(weatherForecastEntity = weatherForecastEntity)
         }
@@ -27,9 +27,10 @@ class HomeLocalDataSourceImpl @Inject constructor(
             weatherDao.getWeather()
         }
 
-    override suspend fun getWeatherForecast(): WeatherForecastEntity? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getWeatherForecast(): List<WeatherForecastEntity>? =
+        withContext(ioDispatcher) {
+            weatherDao.getWeatherForecast()
+        }
 
     override suspend fun deleteAllWeather() {
         withContext(ioDispatcher) {
@@ -38,6 +39,8 @@ class HomeLocalDataSourceImpl @Inject constructor(
     }
 
     override suspend fun deleteAllWeatherForecast() {
-        TODO("Not yet implemented")
+        withContext(ioDispatcher) {
+            weatherDao.deleteAllWeatherForecast()
+        }
     }
 }

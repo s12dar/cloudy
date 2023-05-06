@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.lyvetech.cloudy.R
@@ -28,7 +29,8 @@ enum class TempUnitSelection(@StringRes val readableName: Int) {
 
 data class AppPreferences(
     val selectedTheme: ThemeSelection,
-    val selectedTempUnit: TempUnitSelection
+    val selectedTempUnit: TempUnitSelection,
+    val savedCityId: Int
 )
 
 @Singleton
@@ -37,26 +39,25 @@ class DefaultPreferencesManager @Inject constructor(
 ) : PreferencesManager {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "preferences")
 
-    override val appPreferences: Flow<AppPreferences> = context.dataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw exception
-            }
-        }
-        .map { preferences ->
-            val selectedTheme = ThemeSelection.valueOf(
-                preferences[PreferencesKeys.SELECTED_THEME] ?: ThemeSelection.SYSTEM.name
-            )
-            val selectedTempUnit = TempUnitSelection.valueOf(
-                preferences[PreferencesKeys.SELECTED_TEMP_UNIT] ?: TempUnitSelection.CELSIUS.name
-            )
-            AppPreferences(
-                selectedTheme = selectedTheme,
-                selectedTempUnit = selectedTempUnit
-            )
-        }
+    override val appPreferences: Flow<AppPreferences> = context.dataStore.data.catch { exception ->
+        if (exception is IOException) emit(emptyPreferences())
+        else throw exception
+
+    }.map { preferences ->
+        val selectedTheme = ThemeSelection.valueOf(
+            preferences[PreferencesKeys.SELECTED_THEME] ?: ThemeSelection.SYSTEM.name
+        )
+        val selectedTempUnit = TempUnitSelection.valueOf(
+            preferences[PreferencesKeys.SELECTED_TEMP_UNIT] ?: TempUnitSelection.CELSIUS.name
+        )
+        val savedCityId = preferences[PreferencesKeys.CITY_ID] ?: 0
+
+        AppPreferences(
+            selectedTheme = selectedTheme,
+            selectedTempUnit = selectedTempUnit,
+            savedCityId = savedCityId
+        )
+    }
 
     override suspend fun updateSelectedTheme(theme: ThemeSelection) {
         context.dataStore.edit { preferences ->
@@ -70,16 +71,15 @@ class DefaultPreferencesManager @Inject constructor(
         }
     }
 
-    override suspend fun getTempUnitSelection(): Flow<TempUnitSelection> {
-        return context.dataStore.data.map { preferences ->
-            TempUnitSelection.valueOf(
-                preferences[PreferencesKeys.SELECTED_TEMP_UNIT] ?: TempUnitSelection.CELSIUS.name
-            )
+    override suspend fun updateCityId(cityId: Int) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.CITY_ID] = cityId
         }
     }
 
     private object PreferencesKeys {
         val SELECTED_THEME = stringPreferencesKey("SELECTED_THEME")
         val SELECTED_TEMP_UNIT = stringPreferencesKey("SELECTED_TEMP_UNIT")
+        var CITY_ID = intPreferencesKey("CITY_ID")
     }
 }

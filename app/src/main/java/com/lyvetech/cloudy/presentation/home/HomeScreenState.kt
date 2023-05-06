@@ -14,7 +14,8 @@ data class HomeScreenState(
     companion object {
         val appPreferencesInitialState = AppPreferences(
             selectedTheme = ThemeSelection.SYSTEM,
-            selectedTempUnit = TempUnitSelection.CELSIUS
+            selectedTempUnit = TempUnitSelection.CELSIUS,
+            savedCityId = -1
         )
     }
 }

@@ -6,13 +6,13 @@ import com.lyvetech.cloudy.common.model.WeatherCondition
 import com.lyvetech.cloudy.common.model.WeatherDescription
 import com.lyvetech.cloudy.common.model.Wind
 
-data class WeatherForecastDto(
+data class WeatherForecastResponse(
     @SerializedName("list")
-    val weathers: List<WeatherForecastItem>,
+    val weathers: List<WeatherForecastDto>?,
     val city: City
 )
 
-data class WeatherForecastItem(
+data class WeatherForecastDto(
     val id: Int,
     @SerializedName("dt_txt")
     val date: String,

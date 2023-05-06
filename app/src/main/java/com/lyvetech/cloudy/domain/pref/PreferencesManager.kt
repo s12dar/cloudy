@@ -10,5 +10,5 @@ interface PreferencesManager {
     val appPreferences: Flow<AppPreferences>
     suspend fun updateSelectedTheme(theme: ThemeSelection)
     suspend fun updatedSelectedTempUnit(tempUnit: TempUnitSelection)
-    suspend fun getTempUnitSelection(): Flow<TempUnitSelection>
+    suspend fun updateCityId(cityId: Int)
 }
