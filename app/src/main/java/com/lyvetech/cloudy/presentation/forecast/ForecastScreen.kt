@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -114,7 +115,9 @@ internal fun ForecastScreen(
 
             uiState.weatherForecastList?.let {
                 it.filterWeatherForecastsByDay(dayNo).let { filteredList ->
-                    LazyColumn {
+                    LazyColumn(
+                        contentPadding = PaddingValues(bottom = 16.dp)
+                    ) {
                         itemsIndexed(filteredList) { index, item ->
                             if (index != 0) {
                                 Spacer(modifier = Modifier.height(16.dp))
