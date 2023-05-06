@@ -1,9 +1,9 @@
 package com.lyvetech.cloudy.di
 
-import com.lyvetech.cloudy.data.local.HomeLocalDataSource
-import com.lyvetech.cloudy.data.local.HomeLocalDataSourceImpl
-import com.lyvetech.cloudy.data.remote.HomeRemoteDataSource
-import com.lyvetech.cloudy.data.remote.HomeRemoteDataSourceImpl
+import com.lyvetech.cloudy.data.local.WeatherLocalDataSource
+import com.lyvetech.cloudy.data.local.WeatherLocalDataSourceImpl
+import com.lyvetech.cloudy.data.remote.WeatherRemoteDataSource
+import com.lyvetech.cloudy.data.remote.WeatherRemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class WeatherDataSourceModule {
 
     @Binds
-    abstract fun bindLocalDataSource(localDataSourceImpl: HomeLocalDataSourceImpl): HomeLocalDataSource
+    abstract fun bindLocalDataSource(localDataSourceImpl: WeatherLocalDataSourceImpl): WeatherLocalDataSource
 
     @Binds
-    abstract fun bindRemoteDataSource(remoteDataSource: HomeRemoteDataSourceImpl): HomeRemoteDataSource
+    abstract fun bindRemoteDataSource(remoteDataSource: WeatherRemoteDataSourceImpl): WeatherRemoteDataSource
 }

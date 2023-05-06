@@ -13,7 +13,7 @@ interface WeatherDao {
     suspend fun insertWeather(weatherEntity: WeatherEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWeatherForecast(weatherForecastEntity: WeatherForecastEntity)
+    suspend fun insertWeatherForecast(weatherForecastEntity: List<WeatherForecastEntity?>)
 
     @Query("DELETE FROM weather_table")
     suspend fun deleteAllWeather()
@@ -25,5 +25,5 @@ interface WeatherDao {
     suspend fun getWeather(): WeatherEntity?
 
     @Query("SELECT * FROM weather_forecast_table")
-    suspend fun getWeatherForecast(): List<WeatherForecastEntity?>
+    suspend fun getWeatherForecast(): List<WeatherForecastEntity>?
 }

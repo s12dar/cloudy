@@ -3,8 +3,7 @@ package com.lyvetech.cloudy.presentation.forecast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lyvetech.cloudy.domain.pref.PreferencesManager
-import com.lyvetech.cloudy.domain.repository.HomeRepository
-import com.lyvetech.cloudy.domain.service.LocationTracker
+import com.lyvetech.cloudy.domain.repository.WeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,37 +13,34 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ForecastViewModel @Inject constructor(
-    private val repository: HomeRepository,
-    private val locationTracker: LocationTracker,
-    private val preferencesManager: PreferencesManager
+    private val repository: WeatherRepository,
+    private val preferencesManager: PreferencesManager,
 ) : ViewModel() {
 
     private var _uiState = MutableStateFlow(ForecastScreenState())
     val uiState: StateFlow<ForecastScreenState> = _uiState.asStateFlow()
 
     init {
-        getWeatherInfo()
+        getWeatherForecast()
     }
 
-    private fun getWeatherInfo() {
+    internal fun getWeatherForecast() {
         _uiState.value = _uiState.value.copy(isLoading = true)
         viewModelScope.launch {
-            locationTracker.getCurrentLocation().data?.let { location ->
-                repository.getWeather(location).collect { weatherInfoResponse ->
-                    preferencesManager.appPreferences.collect { appPreferences ->
+            preferencesManager.appPreferences.collect { appPreferences ->
+                repository.getWeatherForecast(appPreferences.savedCityId)
+                    .collect { weatherForecastList ->
                         _uiState.value = _uiState.value.copy(
-                            weather = weatherInfoResponse.data,
-                            appPreferences = appPreferences
+                            weatherForecastList = weatherForecastList.data,
+                            appPreferences = appPreferences,
+                            isLoading = false
                         )
                     }
-                }
             }
         }
-
-        _uiState.value = _uiState.value.copy(isLoading = false)
     }
 
-    fun refreshWeather() {
-        getWeatherInfo()
+    fun refreshWeatherForecast() {
+        getWeatherForecast()
     }
 }

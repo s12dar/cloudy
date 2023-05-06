@@ -16,6 +16,9 @@ data class WeatherForecastEntity(
 
     val date: String,
 
+    @ColumnInfo(name = "last_fetched_time")
+    val lastFetchTime: Long,
+
     @Embedded
     val wind: Wind,
 

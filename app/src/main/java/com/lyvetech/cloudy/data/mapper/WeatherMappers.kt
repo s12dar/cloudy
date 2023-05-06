@@ -3,30 +3,13 @@ package com.lyvetech.cloudy.data.mapper
 import com.lyvetech.cloudy.data.local.entity.WeatherEntity
 import com.lyvetech.cloudy.data.local.entity.WeatherForecastEntity
 import com.lyvetech.cloudy.data.remote.dto.WeatherDto
-import com.lyvetech.cloudy.data.remote.dto.WeatherForecastItem
+import com.lyvetech.cloudy.data.remote.dto.WeatherForecastDto
 import com.lyvetech.cloudy.domain.model.Weather
 import com.lyvetech.cloudy.domain.model.WeatherForecast
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
-//fun WeatherDto.transformDtoToDomain() = Weather(
-//    uId = this.uId,
-//    cityId = this.cityId,
-//    name = this.name,
-//    wind = this.wind,
-//    networkWeatherDescription = this.networkWeatherDescriptions,
-//    networkWeatherCondition = this.networkWeatherCondition
-//)
-
-//fun List<WeatherForecastItem>.transformDtoToDomain(): List<WeatherForecast> {
-//    return this.map { networkWeatherForecast ->
-//        WeatherForecast(
-//            networkWeatherForecast.id,
-//            networkWeatherForecast.date,
-//            networkWeatherForecast.wind,
-//            networkWeatherForecast.networkWeatherDescription,
-//            networkWeatherForecast.networkWeatherCondition
-//        )
-//    }
-//}
 
 fun WeatherDto.transformDtoToEnt(lastFetchTime: Long) = WeatherEntity(
     uId = this.uId,
@@ -38,11 +21,12 @@ fun WeatherDto.transformDtoToEnt(lastFetchTime: Long) = WeatherEntity(
     lastFetchTime = lastFetchTime
 )
 
-fun List<WeatherForecastItem>.transformDtoToEntity(): List<WeatherForecastEntity> {
+fun List<WeatherForecastDto>.transformDtoToEntity(lastFetchTime: Long): List<WeatherForecastEntity> {
     return this.map { weatherForecastDto ->
         WeatherForecastEntity(
             weatherForecastDto.id,
             weatherForecastDto.date,
+            lastFetchTime,
             weatherForecastDto.wind,
             weatherForecastDto.weatherDescription,
             weatherForecastDto.weatherCondition
@@ -62,18 +46,6 @@ fun List<WeatherForecastEntity>.transformEntToDomain(): List<WeatherForecast> {
     }
 }
 
-fun List<WeatherForecast>.transformDomainToEnt(): List<WeatherForecastEntity> {
-    return this.map { weatherForecast ->
-        WeatherForecastEntity(
-            weatherForecast.uID,
-            weatherForecast.date,
-            weatherForecast.wind,
-            weatherForecast.networkWeatherDescription,
-            weatherForecast.networkWeatherCondition
-        )
-    }
-}
-
 fun WeatherEntity.transformEntToDomain(): Weather = Weather(
     uId = this.uId,
     cityId = this.cityId,
@@ -84,12 +56,25 @@ fun WeatherEntity.transformEntToDomain(): Weather = Weather(
     lastFetchedTime = this.lastFetchTime
 )
 
-fun Weather.transformDomainToEnt() = WeatherEntity(
-    uId = this.uId,
-    cityId = this.cityId,
-    cityName = this.name,
-    wind = this.wind,
-    lastFetchTime = this.lastFetchedTime,
-    weatherDescription = this.networkWeatherDescription,
-    weatherCondition = this.networkWeatherCondition
-)
+fun List<WeatherForecast>.filterWeatherForecastsByDay(selectedDay: Int): List<WeatherForecast> {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DATE, selectedDay)
+    val checkerDay = calendar.get(Calendar.DATE)
+    val checkerMonth = calendar.get(Calendar.MONTH)
+    val checkerYear = calendar.get(Calendar.YEAR)
+
+    val filteredList = this.filter { weatherForecast ->
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
+        val formattedDate = format.parse(weatherForecast.date)
+        val weatherForecastDay = formattedDate?.date
+        val weatherForecastMonth = formattedDate?.month
+        val weatherForecastYear = formattedDate?.year
+
+        // This checks if the selected day, month and year are equal. The year requires an addition of 1900 to get the correct year.
+        weatherForecastDay == checkerDay && weatherForecastMonth == checkerMonth && weatherForecastYear?.plus(
+            1900
+        ) == checkerYear
+    }
+
+    return filteredList
+}
