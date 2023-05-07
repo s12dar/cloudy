@@ -58,7 +58,7 @@ fun WeatherEntity.transformEntToDomain(): Weather = Weather(
 
 fun List<WeatherForecast>.filterWeatherForecastsByDay(selectedDay: Int): List<WeatherForecast> {
     val calendar = Calendar.getInstance()
-    calendar.add(Calendar.DATE, selectedDay)
+    calendar.add(Calendar.DATE, selectedDay + 1)
     val checkerDay = calendar.get(Calendar.DATE)
     val checkerMonth = calendar.get(Calendar.MONTH)
     val checkerYear = calendar.get(Calendar.YEAR)
