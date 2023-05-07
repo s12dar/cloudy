@@ -32,6 +32,7 @@ android {
             "OPEN_WEATHER_API_KEY",
             "\"${properties.getProperty("OPEN_WEATHER_API_KEY")}\""
         )
+        buildConfigField("String", "BASE_URL", "\"http://api.openweathermap.org/\"")
     }
 
     buildTypes {

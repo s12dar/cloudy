@@ -24,7 +24,7 @@ object RemoteDataModule {
         converterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(WeatherApiService.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(converterFactory)
             .client(okHttpClient)
             .build()

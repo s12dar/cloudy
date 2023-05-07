@@ -17,8 +17,4 @@ interface WeatherApiService {
     suspend fun getWeatherForecast(
         @Query("id") cityId: Int
     ): Response<WeatherForecastResponse>
-
-    companion object {
-        const val BASE_URL = "http://api.openweathermap.org/"
-    }
 }
