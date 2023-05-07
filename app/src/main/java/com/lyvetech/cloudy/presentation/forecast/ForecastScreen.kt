@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -114,7 +115,7 @@ internal fun ForecastScreen(
             Spacer(modifier = Modifier.height(22.dp))
 
             uiState.weatherForecastList?.let {
-                if (dayNo in 0..4) {
+                if (dayNo in 0..5) {
                     it.filterWeatherForecastsByDay(dayNo).let { filteredList ->
                         LazyColumn(
                             contentPadding = PaddingValues(bottom = 16.dp)
@@ -140,24 +141,28 @@ internal fun ForecastScreen(
                         }
                     }
                 } else {
-                    Column(
+                    Box(
                         modifier = modifier
-                            .fillMaxWidth()
+                            .fillMaxSize()
                             .padding(8.dp),
-                        horizontalAlignment = CenterHorizontally,
+                        contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_no_weather_info),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-                        )
+                        Column(
+                            horizontalAlignment = CenterHorizontally,
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_no_weather_info),
+                                contentDescription = null,
+                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
+                            )
 
-                        Text(
-                            text = stringResource(id = R.string.future_weather_msg),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                            Text(
+                                text = stringResource(id = R.string.future_weather_msg),
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
                 }
             }

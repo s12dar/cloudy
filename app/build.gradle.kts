@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
@@ -10,6 +12,10 @@ android {
     namespace = Configs.applicationId
     compileSdk = Configs.compileSdkVersion
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = Configs.applicationId
         minSdk = Configs.minSdkVersion
@@ -18,6 +24,14 @@ android {
         versionName = Configs.versionName
 
         testInstrumentationRunner = Configs.testInstrumentationRunner
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField(
+            "String",
+            "OPEN_WEATHER_API_KEY",
+            "\"${properties.getProperty("OPEN_WEATHER_API_KEY")}\""
+        )
     }
 
     buildTypes {

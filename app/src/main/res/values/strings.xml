@@ -26,14 +26,14 @@
     <string name="help_us">Help us to make cloudy better</string>
     <string name="rate_us">Rate us</string>
     <string name="give_feedbacks">Share your feedbacks with us</string>
-    <string name="version">Version: 0.1.1</string>
+    <string name="version">Version: 0.1.4</string>
     <string name="app_version">Current app version</string>
     <string name="close">Close</string>
     <string name="ok">OK</string>
     <string name="settings">Settings</string>
     <string name="past_weather_msg">You know what? Life is too short, please don\'t look back</string>
     <string name="future_weather_msg">You know what? Life is too short, let\'s live in the moment</string>
-    <string name="location_permission_msg">We\'re really sorry that we can\'t show you weather information unless you grant an access to your location.</string>
+    <string name="location_permission_msg">Uh-oh! It looks like our weather app is a bit lost without your location. 🤷‍♂️ To help us show you the most accurate and personalized weather updates, we need to know where you are on this wonderful planet. 🌍</string>
     <string name="back">Back</string>
 
 </resources>
