@@ -1,6 +1,7 @@
 package com.lyvetech.cloudy.di
 
 import com.google.gson.Gson
+import com.lyvetech.cloudy.BuildConfig
 import com.lyvetech.cloudy.data.remote.retrofit.WeatherApiService
 import dagger.Module
 import dagger.Provides
@@ -32,10 +33,6 @@ object RemoteDataModule {
     @Provides
     @Singleton
     fun provideOkHttp3(): OkHttpClient {
-//        return OkHttpClient.Builder()
-//            .addNetworkInterceptor(StethoInterceptor())
-//            .build()
-
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
 
@@ -43,9 +40,8 @@ object RemoteDataModule {
                 val originalHttpUrl = original.url
 
                 val url = originalHttpUrl.newBuilder()
-                    .addQueryParameter("appid", "3fd0ec00ccaf95a62c2abf73b92eab57")
+                    .addQueryParameter("appid", BuildConfig.OPEN_WEATHER_API_KEY)
                     .build()
-
 
                 val requestBuilder = original.newBuilder()
                     .url(url)
