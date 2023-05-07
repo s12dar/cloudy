@@ -19,7 +19,13 @@ Cloudy is an open-source weather app for Android that provides users with up-to-
 To build and run the app, you will need the latest version of Android Studio Giraffe (or newer) installed on your system.
 
 ### Weather API 😍
-The weather data is provided by the [open-meteo API](https://open-meteo.com/), which does not require an API key. The app retrieves the user's location using the device's GPS and uses the latitude and longitude to fetch the current weather and forecast for the next seven days.
+The weather data is provided by the [Open Weather API](https://openweathermap.org/api), which requires an API key. To store your Open Weather API key, add it to your `local.properties` file as follows:
+
+````properties
+OPEN_WEATHER_API_KEY=[YOUR_API_KEY]
+````
+
+The app retrieves the user's location using the device's GPS and uses the latitude and longitude to fetch the current weather and forecast for the next five days from the Open Weather API.
 
 ### Contributions 🙌
 All contributions to Cloudy are welcome! Please feel free to jump in and pick an issue to work on. Just make sure to comment on the issue before you start working on it.
