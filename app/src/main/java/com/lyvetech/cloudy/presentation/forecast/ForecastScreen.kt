@@ -2,7 +2,6 @@ package com.lyvetech.cloudy.presentation.forecast
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -92,8 +91,6 @@ internal fun ForecastScreen(
         firstVisibleWeekDate = currentDate,
     )
     val dayNo = selection.getDifferences(LocalDate.now())
-
-    Log.i("hi serdar", dayNo.toString())
 
     Box(
         modifier = modifier
