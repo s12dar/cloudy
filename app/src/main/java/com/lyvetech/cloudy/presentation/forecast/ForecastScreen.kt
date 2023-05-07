@@ -2,6 +2,7 @@ package com.lyvetech.cloudy.presentation.forecast
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -92,6 +93,8 @@ internal fun ForecastScreen(
     )
     val dayNo = selection.getDifferences(LocalDate.now())
 
+    Log.i("hi serdar", dayNo.toString())
+
     Box(
         modifier = modifier
             .pullRefresh(pullRefreshState)
@@ -114,51 +117,44 @@ internal fun ForecastScreen(
             Spacer(modifier = Modifier.height(22.dp))
 
             uiState.weatherForecastList?.let {
-                it.filterWeatherForecastsByDay(dayNo).let { filteredList ->
-                    LazyColumn(
-                        contentPadding = PaddingValues(bottom = 16.dp)
-                    ) {
-                        itemsIndexed(filteredList) { index, item ->
-                            if (index != 0) {
-                                Spacer(modifier = Modifier.height(16.dp))
-                            }
+                if (dayNo in 0..4) {
+                    it.filterWeatherForecastsByDay(dayNo).let { filteredList ->
+                        LazyColumn(
+                            contentPadding = PaddingValues(bottom = 16.dp)
+                        ) {
+                            itemsIndexed(filteredList) { index, item ->
+                                if (index != 0) {
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                }
 
-                            item.networkWeatherDescription.forEach { description ->
-                                ForecastItem(
-                                    dateAndTime = item.date.toDateFormat(),
-                                    weatherType = description.description.toString(),
-                                    temperature =
-                                    if (selectedTempUnit == Constants.FAHRENHEIT) "${
-                                        (item.networkWeatherCondition.temp.toFahrenheit())
-                                    }${Constants.FAHRENHEIT_SIGN}" else "${item.networkWeatherCondition.temp.toCelsius()}${Constants.CELSIUS_SIGN}",
-                                    weatherIcon = WeatherType.fromWMO(description.icon.toString()).iconRes
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
+                                item.networkWeatherDescription.forEach { description ->
+                                    ForecastItem(
+                                        dateAndTime = item.date.toDateFormat(),
+                                        weatherType = description.description.toString(),
+                                        temperature =
+                                        if (selectedTempUnit == Constants.FAHRENHEIT) "${
+                                            (item.networkWeatherCondition.temp.toFahrenheit())
+                                        }${Constants.FAHRENHEIT_SIGN}" else "${item.networkWeatherCondition.temp.toCelsius()}${Constants.CELSIUS_SIGN}",
+                                        weatherIcon = WeatherType.fromWMO(description.icon.toString()).iconRes
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                }
                             }
                         }
                     }
-                }
-            } ?: run {
-                Column(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    horizontalAlignment = CenterHorizontally,
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_no_weather_info),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
-                    )
-
-                    if (dayNo < 0) {
-                        Text(
-                            text = stringResource(id = R.string.past_weather_msg),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.bodyMedium
+                } else {
+                    Column(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalAlignment = CenterHorizontally,
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_no_weather_info),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
                         )
-                    } else {
+
                         Text(
                             text = stringResource(id = R.string.future_weather_msg),
                             textAlign = TextAlign.Center,
