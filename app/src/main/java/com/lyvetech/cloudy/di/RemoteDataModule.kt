@@ -19,7 +19,7 @@ object RemoteDataModule {
 
     @Provides
     @Singleton
-    fun provideTransNatureServiceApi(
+    fun provideRetrofit(
         okHttpClient: OkHttpClient,
         converterFactory: GsonConverterFactory
     ): Retrofit {
