@@ -1,9 +1,9 @@
 package com.lyvetech.cloudy.di
 
 import android.app.Application
+import com.google.android.gms.location.LocationServices
 import com.lyvetech.cloudy.domain.service.LocationTracker
 import com.lyvetech.cloudy.domain.service.LocationTrackerImpl
-import com.google.android.gms.location.LocationServices
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

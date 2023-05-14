@@ -3,7 +3,6 @@ package com.lyvetech.cloudy.presentation.forecast
 import com.lyvetech.cloudy.data.pref.AppPreferences
 import com.lyvetech.cloudy.data.pref.TempUnitSelection
 import com.lyvetech.cloudy.data.pref.ThemeSelection
-import com.lyvetech.cloudy.domain.model.Weather
 import com.lyvetech.cloudy.domain.model.WeatherForecast
 
 data class ForecastScreenState(

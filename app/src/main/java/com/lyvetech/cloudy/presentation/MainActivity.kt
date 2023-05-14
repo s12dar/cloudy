@@ -13,9 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lyvetech.cloudy.data.pref.ThemeSelection
 import com.facebook.stetho.Stetho
 import com.lyvetech.cloudy.common.ui.theme.CloudyTheme
+import com.lyvetech.cloudy.data.pref.ThemeSelection
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

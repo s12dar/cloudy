@@ -1,7 +1,7 @@
 package com.lyvetech.cloudy.di
 
-import com.lyvetech.cloudy.data.local.db.WeatherDatabase
 import com.lyvetech.cloudy.data.local.dao.WeatherDao
+import com.lyvetech.cloudy.data.local.db.WeatherDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -55,6 +55,7 @@ fun WeatherEntity.transformEntToDomain(): Weather = Weather(
     networkWeatherCondition = this.weatherCondition,
     lastFetchedTime = this.lastFetchTime
 )
+
 fun List<WeatherForecast>.filterWeatherForecastsByDay(selectedDay: Int): List<WeatherForecast> {
     val calendar = Calendar.getInstance()
     calendar.add(Calendar.DATE, selectedDay)

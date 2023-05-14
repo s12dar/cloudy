@@ -2,7 +2,6 @@ package com.lyvetech.cloudy.di
 
 import com.google.gson.Gson
 import com.lyvetech.cloudy.BuildConfig
-import com.lyvetech.cloudy.data.remote.retrofit.WeatherApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
