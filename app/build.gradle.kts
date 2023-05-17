@@ -26,12 +26,23 @@ android {
         testInstrumentationRunner = Configs.testInstrumentationRunner
 
         val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
+        val openWeatherApiKey: String
+
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        openWeatherApiKey = if (localPropertiesFile.exists()) {
+            properties.load(localPropertiesFile.inputStream())
+            properties.getProperty("OPEN_WEATHER_API_KEY") ?: ""
+        } else {
+            System.getenv("OPEN_WEATHER_API_KEY") ?: ""
+        }
+
         buildConfigField(
             "String",
             "OPEN_WEATHER_API_KEY",
-            "\"${System.getenv("OPEN_WEATHER_API_KEY") ?: properties.getProperty("OPEN_WEATHER_API_KEY")}\""
+            "\"$openWeatherApiKey\""
         )
+        buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/\"")
+
         buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/\"")
     }
 
