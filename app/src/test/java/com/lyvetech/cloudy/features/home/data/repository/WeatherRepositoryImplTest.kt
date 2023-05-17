@@ -48,7 +48,7 @@ class WeatherRepositoryImplTest {
             val result = mutableListOf<Resource<Weather>>()
             systemUnderTest.getWeather(dummyLocation).collect { result.add(it) }
 
-            result.first() `should be` fakeNotExpiredWeatherInfo
+            result.first().data `should be` fakeNotExpiredWeatherInfo
             coVerify(exactly = 1) { weatherLocalDataSource.getWeather() }
             coVerify(exactly = 0) { weatherRemoteDataSource.getWeather(any()) }
             coVerify(exactly = 0) { weatherLocalDataSource.deleteAllWeather() }
@@ -59,7 +59,6 @@ class WeatherRepositoryImplTest {
     @Test
     fun `check that getWeather with data is expired fetches successfully from the remote source`() =
         runBlocking {
-
             coEvery {
                 weatherLocalDataSource.getWeather()
             } returns fakeExpiredWeatherEntity
@@ -84,5 +83,51 @@ class WeatherRepositoryImplTest {
             coVerify(exactly = 1) { weatherRemoteDataSource.getWeather(any()) }
             coVerify(exactly = 1) { weatherLocalDataSource.deleteAllWeather() }
             coVerify(exactly = 1) { weatherLocalDataSource.insertWeather(any()) }
+        }
+
+    @Test
+    fun `check that getWeather emits an error when local source returns null and remote source returns error`() =
+        runBlocking {
+            coEvery {
+                weatherLocalDataSource.getWeather()
+            } returns null
+
+            coEvery {
+                weatherRemoteDataSource.getWeather(dummyLocation)
+            } returns Resource.Error(message = "Invalid Data")
+
+            val result = systemUnderTest.getWeather(dummyLocation)
+            result.collect { it `should be` Resource.Error(data = null, message = "Invalid Data") }
+
+            coVerify(exactly = 2) { weatherLocalDataSource.getWeather() }
+            coVerify(exactly = 1) { weatherRemoteDataSource.getWeather(dummyLocation) }
+            coVerify(exactly = 0) { weatherLocalDataSource.deleteAllWeather() }
+            coVerify(exactly = 0) { weatherLocalDataSource.insertWeather(any()) }
+        }
+
+    @Test
+    fun `check that getWeather fetches from remote source and emits error when local source data is expired and remote fetch fails`() =
+        runBlocking {
+            // Given
+            coEvery {
+                weatherLocalDataSource.getWeather()
+            } returns fakeExpiredWeatherEntity
+
+            coEvery {
+                weatherRemoteDataSource.getWeather(dummyLocation)
+            } returns Resource.Error(message = "Invalid Data")
+
+            val result = systemUnderTest.getWeather(dummyLocation)
+            result.collect {
+                it `should be` Resource.Error(
+                    data = fakeExpiredWeatherInfo,
+                    message = "Invalid Data"
+                )
+            }
+
+            coVerify(exactly = 2) { weatherLocalDataSource.getWeather() }
+            coVerify(exactly = 1) { weatherRemoteDataSource.getWeather(dummyLocation) }
+            coVerify(exactly = 0) { weatherLocalDataSource.deleteAllWeather() }
+            coVerify(exactly = 0) { weatherLocalDataSource.insertWeather(any()) }
         }
 }
