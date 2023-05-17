@@ -1,73 +1,48 @@
 package com.lyvetech.cloudy.utils
 
 import com.lyvetech.cloudy.common.model.LocationModel
-import com.lyvetech.cloudy.data.local.entity.WeatherDataEntity
+import com.lyvetech.cloudy.common.model.WeatherCondition
+import com.lyvetech.cloudy.common.model.WeatherDescription
+import com.lyvetech.cloudy.common.model.Wind
 import com.lyvetech.cloudy.data.local.entity.WeatherEntity
-import com.lyvetech.cloudy.data.mapper.toWeatherInfo
-import com.lyvetech.cloudy.data.mapper.toWeatherLocal
-import com.lyvetech.cloudy.data.remote.dto.WeatherDataDto
+import com.lyvetech.cloudy.data.mapper.transformEntToDomain
 import com.lyvetech.cloudy.data.remote.dto.WeatherDto
-import com.lyvetech.cloudy.data.pref.AppPreferences
-import com.lyvetech.cloudy.data.pref.TempUnitSelection
-import com.lyvetech.cloudy.data.pref.ThemeSelection
-import kotlinx.coroutines.flow.flow
 
-val fakeWeatherDataDto = WeatherDataDto(
-    time = listOf(
-        "2022-02-22T02:05:58.147Z",
-        "2022-02-22T02:06:58.147Z",
-        "2022-02-22T02:07:58.147Z"
-    ),
-    temperatures = listOf(1.0, 2.0, 3.0),
-    weatherCodes = listOf(1, 2, 3),
-    pressures = listOf(1.0, 2.0, 3.0),
-    windSpeeds = listOf(1.0, 2.0, 3.0),
-    humidities = listOf(1.0, 2.0, 3.0)
-)
-
-val fakeWeatherDataEntity = WeatherDataEntity(
-    time = listOf(
-        "2022-02-22T02:05:58.147Z",
-        "2022-02-22T02:06:58.147Z",
-        "2022-02-22T02:07:58.147Z"
-    ),
-    temperatures = listOf(1.0, 2.0, 3.0),
-    weatherCodes = listOf(0, 1, 3),
-    pressures = listOf(1.0, 2.0, 3.0),
-    windSpeeds = listOf(1.0, 2.0, 3.0),
-    humidities = listOf(1.0, 2.0, 3.0)
-)
 
 val fakeNotExpiredWeatherEntity = WeatherEntity(
+    1,
     lastFetchTime = System.currentTimeMillis(),
-    weatherData = fakeWeatherDataEntity,
-    latitude = 12.0,
-    longitude = 12.0
+    123,
+    "Lagos",
+    Wind(32.5, 24),
+    listOf(WeatherDescription(1L, "Main", "Cloudy", "icon")),
+    WeatherCondition(324.43, 1234.32, 32.5)
 )
 
-val fakeNotExpiredWeatherInfo = fakeNotExpiredWeatherEntity.toWeatherInfo()
-
+val fakeExpiredWeatherEntity = WeatherEntity(
+    1,
+    lastFetchTime = System.currentTimeMillis() - 60 * 5000L,
+    123,
+    "Lagos",
+    Wind(32.5, 24),
+    listOf(WeatherDescription(1L, "Main", "Cloudy", "icon")),
+    WeatherCondition(324.43, 1234.32, 32.5)
+)
 
 val fakeWeatherDto = WeatherDto(
-    latitude = 12.0,
-    longitude = 12.0,
-    weatherData = fakeWeatherDataDto
+    1,
+    123,
+    "Lagos",
+    Wind(32.5, 24),
+    listOf(WeatherDescription(1L, "Main", "Cloudy", "icon")),
+    WeatherCondition(324.43, 1234.32, 32.5)
 )
 
-val fakeExpiredWeatherEntity = fakeWeatherDto.toWeatherLocal(
-    System.currentTimeMillis() - 60 * 1000L
-)
+val fakeNotExpiredWeatherInfo = fakeNotExpiredWeatherEntity.transformEntToDomain()
 
-val fakeExpiredWeatherInfo = fakeExpiredWeatherEntity.toWeatherInfo()
+val fakeExpiredWeatherInfo = fakeExpiredWeatherEntity.transformEntToDomain()
 
 val dummyLocation = LocationModel(
     latitude = 12.0,
     longitude = 12.0
 )
-
-val fakeAppPreferences = flow<AppPreferences> {
-    AppPreferences(
-        selectedTheme = ThemeSelection.DARK,
-        selectedTempUnit = TempUnitSelection.FAHRENHEIT
-    )
-}
